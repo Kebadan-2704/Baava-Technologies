@@ -30,8 +30,12 @@ const ParticleNetwork = () => {
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.8;
-        this.vy = (Math.random() - 0.5) * 0.8;
+        const speed = Math.random() * 1.5 + 1.0; // Base speed between 1.0 and 2.5
+        const angle = Math.random() * Math.PI * 2;
+        this.baseVx = Math.cos(angle) * speed;
+        this.baseVy = Math.sin(angle) * speed;
+        this.vx = this.baseVx;
+        this.vy = this.baseVy;
         this.radius = Math.random() * 2.5 + 1.5;
         this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
         this.opacity = Math.random() * 0.3 + 0.5;
@@ -46,21 +50,27 @@ const ParticleNetwork = () => {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < MOUSE_RADIUS) {
             const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
-            this.vx += (dx / dist) * force * 0.5;
-            this.vy += (dy / dist) * force * 0.5;
+            this.vx += (dx / dist) * force * 1.5;
+            this.vy += (dy / dist) * force * 1.5;
           }
         }
 
-        // Damping
-        this.vx *= 0.99;
-        this.vy *= 0.99;
+        // Return to base velocity smoothly
+        this.vx += (this.baseVx - this.vx) * 0.05;
+        this.vy += (this.baseVy - this.vy) * 0.05;
 
         this.x += this.vx;
         this.y += this.vy;
 
         // Bounce off edges
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        if (this.x < 0 || this.x > canvas.width) {
+          this.vx *= -1;
+          this.baseVx *= -1;
+        }
+        if (this.y < 0 || this.y > canvas.height) {
+          this.vy *= -1;
+          this.baseVy *= -1;
+        }
         this.x = Math.max(0, Math.min(canvas.width, this.x));
         this.y = Math.max(0, Math.min(canvas.height, this.y));
       }
