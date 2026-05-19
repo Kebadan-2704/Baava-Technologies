@@ -22,8 +22,9 @@ export default {
         accent: "#5F99BD",
       },
       fontFamily: {
-        syne: ['Syne', 'sans-serif'],
-        sans: ['DM Sans', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
+        outfit: ['Outfit', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
