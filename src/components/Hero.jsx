@@ -7,7 +7,12 @@ import ParticleNetwork from './ParticleNetwork';
 const Hero = () => {
   return (
     <section className="relative pt-32 pb-24 bg-[#F8FAFC] overflow-hidden selection:bg-brand-500 selection:text-white">
-      {/* Premium Background Design */}
+      {/* Interactive Particle Network — own layer, not inside pointer-events-none */}
+      <div className="absolute inset-0 z-[1]">
+        <ParticleNetwork />
+      </div>
+
+      {/* Premium Background Design — decorative layer */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {/* Modern Dot Grid and Line Grid Overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1.5px,transparent_1.5px),linear-gradient(to_bottom,#e2e8f0_1.5px,transparent_1.5px)] bg-[size:6rem_6rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-[0.22]"></div>
@@ -61,11 +66,6 @@ const Hero = () => {
         {/* Thin horizontal structure lines */}
         <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200/25 to-transparent"></div>
         <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200/25 to-transparent"></div>
-        
-        {/* Interactive Particle Network */}
-        <div className="absolute inset-0 opacity-90 z-0">
-          <ParticleNetwork />
-        </div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
