@@ -49,12 +49,12 @@ const MouseGlow = memo(() => {
 
 function FeatureCard({ icon, title, description }) {
   return (
-    <div className="flex flex-col items-center text-center p-6 bg-white/40 backdrop-blur-md rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
-      <div className="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-[#26a7e0]/10 transition-colors duration-300">
-        {icon}
+    <div className="flex flex-col items-center justify-center text-center p-2 md:p-6 bg-white/40 backdrop-blur-md rounded-xl md:rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+      <div className="w-8 h-8 md:w-12 md:h-12 bg-slate-50 rounded-full flex items-center justify-center mb-2 md:mb-4 group-hover:bg-[#26a7e0]/10 transition-colors duration-300">
+        {React.cloneElement(icon, { className: "w-4 h-4 md:w-5 md:h-5 text-[#26a7e0]" })}
       </div>
-      <h3 className="text-sm md:text-base font-black text-slate-700 uppercase tracking-widest mb-3">{title}</h3>
-      <p className="text-xs md:text-sm text-slate-500 font-medium leading-relaxed max-w-sm">
+      <h3 className="text-[8px] leading-tight md:text-base font-black text-slate-700 uppercase tracking-widest mb-0 md:mb-3">{title}</h3>
+      <p className="hidden md:block text-xs md:text-sm text-slate-500 font-medium leading-relaxed max-w-sm">
         {description}
       </p>
     </div>
@@ -72,7 +72,7 @@ function App() {
   };
 
   return (
-    <div className="relative h-[100dvh] w-full bg-gradient-to-br from-slate-50 via-[#f0f7fb] to-[#e1f0f8] text-slate-800 overflow-x-hidden overflow-y-auto flex flex-col font-sans">
+    <div className="relative h-[100dvh] w-full bg-gradient-to-br from-slate-50 via-[#f0f7fb] to-[#e1f0f8] text-slate-800 overflow-hidden flex flex-col font-sans">
       <CustomCursor />
       
       {/* Background Floating Papers */}
@@ -102,23 +102,23 @@ function App() {
         initial="hidden"
         animate="visible"
         transition={{ staggerChildren: 0.15 }}
-        className="relative z-20 w-full flex-1 max-w-7xl mx-auto flex flex-col items-center justify-between py-4 md:py-6 px-4 md:px-6"
+        className="relative z-20 w-full h-full max-w-7xl mx-auto flex flex-col items-center justify-between py-2 md:py-6 px-2 md:px-6"
       >
         {/* TOP: Animated Logo Image */}
-        <motion.div variants={itemVariants} className="flex flex-col items-center select-none w-full max-w-3xl mt-2 md:mt-4 relative z-20">
-          <div className="relative w-full p-1.5 bg-white rounded-[1.5rem] shadow-[0_15px_50px_-15px_rgba(38,167,224,0.15)] border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(38,167,224,0.3)] group">
+        <motion.div variants={itemVariants} className="flex flex-col items-center select-none w-full max-w-3xl mt-1 md:mt-4 relative z-20">
+          <div className="relative w-full p-1 md:p-1.5 bg-white rounded-xl md:rounded-[1.5rem] shadow-[0_15px_50px_-15px_rgba(38,167,224,0.15)] border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(38,167,224,0.3)] group">
             
             {/* The Logo with 3D Float */}
-            <div className="animate-float-logo">
+            <div className="animate-float-logo flex justify-center">
               <img 
                 src="/logo.png" 
                 alt="Baava Tech Logo" 
-                className="w-full h-auto max-h-[160px] md:max-h-[220px] object-contain rounded-[1.25rem] group-hover:scale-[1.02] transition-transform duration-700 pointer-events-none" 
+                className="w-auto h-auto max-h-[50px] md:max-h-[220px] object-contain rounded-lg md:rounded-[1.25rem] group-hover:scale-[1.02] transition-transform duration-700 pointer-events-none" 
               />
             </div>
 
             {/* The Sweeping Cinematic Light Glare */}
-            <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden rounded-[1.5rem]">
+            <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden rounded-xl md:rounded-[1.5rem]">
               <div className="absolute top-0 bottom-0 w-1/3 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shine-sweep mix-blend-overlay" />
             </div>
 
@@ -132,26 +132,26 @@ function App() {
         </motion.div>
 
         {/* FEATURES GRID */}
-        <motion.div variants={itemVariants} className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 my-6 md:my-10 px-2 md:px-6 z-20">
+        <motion.div variants={itemVariants} className="w-full max-w-6xl grid grid-cols-3 gap-2 md:gap-8 my-2 md:my-10 px-1 md:px-6 z-20">
           <FeatureCard 
-            icon={<Zap className="w-5 h-5 text-[#26a7e0]" />}
+            icon={<Zap />}
             title="Zero-Lag Performance"
             description="Powered by hardware-accelerated CSS physics, our platform runs natively on your graphics card for a perfectly smooth, stutter-free experience on any device."
           />
           <FeatureCard 
-            icon={<MonitorSmartphone className="w-5 h-5 text-[#26a7e0]" />}
+            icon={<MonitorSmartphone />}
             title="Responsive Perfection"
             description="Engineered to scale flawlessly. Whether viewing on a massive ultra-wide monitor or a mobile device, our workflows adapt perfectly to your exact environment."
           />
           <FeatureCard 
-            icon={<Sparkles className="w-5 h-5 text-[#26a7e0]" />}
+            icon={<Sparkles />}
             title="High-End Aesthetics"
             description="Experience a million-dollar enterprise platform featuring glassmorphism elements, shimmering typography, and a clean, modern corporate color palette."
           />
         </motion.div>
 
         {/* BOTTOM: Contact & Global Support Section */}
-        <motion.div variants={itemVariants} className="flex flex-col items-center gap-2 md:gap-3 mt-auto pb-4 md:pb-0">
+        <motion.div variants={itemVariants} className="flex flex-col items-center gap-1.5 md:gap-3 mt-auto pb-2 md:pb-0">
           
           {/* Global Support Text */}
           <div className="flex items-center gap-2 text-slate-500 font-medium">

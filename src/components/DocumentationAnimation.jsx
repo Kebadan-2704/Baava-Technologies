@@ -31,9 +31,8 @@ const MESSY_PAPERS = [
 function MessyPaper({ rotate, x, y, color, delay, label, visible }) {
   return (
     <div
-      className={`absolute rounded-lg shadow-md border border-slate-200/80 overflow-hidden transition-all duration-700 animate-float-messy ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none'}`}
+      className={`absolute w-[36px] h-[46px] md:w-[54px] md:h-[68px] rounded-sm md:rounded-lg shadow-md border border-slate-200/80 overflow-hidden transition-all duration-700 animate-float-messy ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none'}`}
       style={{
-        width: 54, height: 68,
         '--mx': `${x}px`,
         '--my': `${y}px`,
         '--mr': `${rotate}deg`,
@@ -41,15 +40,15 @@ function MessyPaper({ rotate, x, y, color, delay, label, visible }) {
         background: `linear-gradient(160deg, #ffffff 0%, #fafafa 60%, ${color}08 100%)`,
       }}
     >
-      <div className="h-[3px] w-full" style={{ background: `linear-gradient(90deg, ${color}, ${color}88)` }} />
-      <div className="p-[6px] space-y-[3px]">
+      <div className="h-[2px] md:h-[3px] w-full" style={{ background: `linear-gradient(90deg, ${color}, ${color}88)` }} />
+      <div className="p-[3px] md:p-[6px] space-y-[2px] md:space-y-[3px]">
         {[85, 65, 75, 55, 70].map((w, i) => (
-          <div key={i} className="h-[2px] rounded-full bg-slate-200/60" style={{ width: `${w}%` }} />
+          <div key={i} className="h-[1.5px] md:h-[2px] rounded-full bg-slate-200/60" style={{ width: `${w}%` }} />
         ))}
       </div>
       {label && (
-        <div className="px-[5px]">
-          <span className="text-[5px] font-bold uppercase tracking-wider" style={{ color: `${color}cc` }}>{label}</span>
+        <div className="px-[3px] md:px-[5px]">
+          <span className="text-[4px] md:text-[5px] font-bold uppercase tracking-wider" style={{ color: `${color}cc` }}>{label}</span>
         </div>
       )}
     </div>
@@ -71,18 +70,18 @@ function FlyingPaper({ doc, index, cycleKey, onArrived }) {
     >
       <div className="absolute inset-0 -left-8 rounded-2xl opacity-50 -z-10"
         style={{ background: `radial-gradient(ellipse at center, ${doc.color} 0%, transparent 70%)`, width: '140%', height: '100%' }} />
-      <div className="rounded-xl overflow-hidden flex items-center gap-0 min-w-[140px] md:min-w-[170px] backdrop-blur-sm"
+      <div className="rounded-lg md:rounded-xl overflow-hidden flex items-center gap-0 min-w-[90px] md:min-w-[170px] backdrop-blur-sm"
         style={{
           background: `linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 50%, ${doc.color}12 100%)`,
           border: `1.5px solid ${doc.color}40`,
           boxShadow: `0 8px 32px -6px ${doc.color}35, 0 2px 8px rgba(0,0,0,0.06)`,
         }}
       >
-        <div className="w-[5px] self-stretch flex-shrink-0 rounded-l-xl"
+        <div className="w-[3px] md:w-[5px] self-stretch flex-shrink-0 rounded-l-lg md:rounded-l-xl"
           style={{ background: `linear-gradient(180deg, ${doc.color}, ${doc.color}aa)` }} />
-        <div className="flex items-center gap-2.5 px-3.5 py-2.5">
-          <span className="text-lg md:text-xl drop-shadow-sm">{doc.icon}</span>
-          <span className="text-[11px] md:text-xs font-extrabold text-slate-800 uppercase tracking-wider whitespace-nowrap">
+        <div className="flex items-center gap-1.5 md:gap-2.5 px-2 md:px-3.5 py-1.5 md:py-2.5">
+          <span className="text-xs md:text-xl drop-shadow-sm">{doc.icon}</span>
+          <span className="text-[8px] md:text-xs font-extrabold text-slate-800 uppercase tracking-wider whitespace-nowrap">
             {doc.label}
           </span>
         </div>
@@ -146,27 +145,27 @@ export default function DocumentationAnimation() {
   const remainingPapers = Math.max(0, MESSY_PAPERS.length - arrivedIds.size);
 
   return (
-    <div className="w-full py-1 flex flex-col items-center justify-center space-y-2 md:space-y-4 relative overflow-hidden">
+    <div className="w-full py-1 flex flex-col items-center justify-center space-y-1 md:space-y-4 relative overflow-hidden">
 
         {/* Title Section */}
-        <div className="flex flex-col items-center space-y-3 z-20 mb-8 md:mb-12">
-          <div className="flex items-center gap-3">
-            <ArrowDownToLine className="w-5 h-5 md:w-6 md:h-6 text-[#26a7e0] animate-bounce" />
-            <h1 className="text-sm md:text-base font-black tracking-[0.3em] uppercase animate-text-shimmer">
+        <div className="flex flex-col items-center space-y-1 md:space-y-3 z-20 mb-3 md:mb-12">
+          <div className="flex items-center gap-1.5 md:gap-3">
+            <ArrowDownToLine className="w-4 h-4 md:w-6 md:h-6 text-[#26a7e0] animate-bounce" />
+            <h1 className="text-[10px] md:text-base font-black tracking-[0.1em] md:tracking-[0.3em] uppercase animate-text-shimmer">
               Document & Admin Outsourcing
             </h1>
           </div>
-          <p className="text-base md:text-xl font-bold text-slate-500 max-w-2xl text-center leading-relaxed">
+          <p className="text-[11px] md:text-xl font-bold text-slate-500 max-w-2xl text-center leading-relaxed px-4 md:px-0">
             Outsource your high-volume document workflows securely to Bava Tech
           </p>
         </div>
 
       {/* Animation Field */}
-      <div className="w-full flex items-center justify-between max-w-5xl relative px-4 md:px-8 z-10">
+      <div className="w-full flex items-center justify-between max-w-5xl relative px-1 md:px-8 z-10">
 
         {/* LEFT: Inbox */}
-        <div className="flex flex-col items-center space-y-2 relative z-20 flex-shrink-0">
-          <div className="relative w-[140px] h-[150px] md:w-[155px] md:h-[165px] flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-1 md:space-y-2 relative z-20 flex-shrink-0">
+          <div className="relative w-[90px] h-[100px] md:w-[155px] md:h-[165px] flex items-center justify-center">
             <motion.div animate={{ opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 3, repeat: Infinity }}
               className="absolute inset-0 rounded-2xl bg-amber-100/50 blur-md" />
             <div className="absolute inset-2 rounded-2xl bg-gradient-to-b from-white to-amber-50/80 border-2 border-dashed border-amber-300/50 shadow-inner" />
@@ -186,19 +185,19 @@ export default function DocumentationAnimation() {
             </motion.div>
           </div>
           <div className="text-center">
-            <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-amber-600 font-bold font-mono">Client Backlog</span>
-            <p className="text-[8px] md:text-[9px] text-slate-400 mt-0.5">Unorganized</p>
+            <span className="text-[8px] md:text-xs uppercase tracking-[0.2em] text-amber-600 font-bold font-mono">Client Backlog</span>
+            <p className="text-[7px] md:text-[9px] text-slate-400 mt-0 md:mt-0.5">Unorganized</p>
           </div>
         </div>
 
         {/* Dotted connector: Left → Pipeline */}
-        <svg className="absolute left-[12%] md:left-[14%] top-1/2 -translate-y-1/2 w-[8%] h-16 z-0" viewBox="0 0 80 60" fill="none">
+        <svg className="absolute left-[12%] md:left-[14%] top-1/2 -translate-y-1/2 w-[8%] h-10 md:h-16 z-0" viewBox="0 0 80 60" fill="none">
           <motion.path d="M0,30 Q40,5 80,30" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="4 4" fill="none"
             animate={{ strokeDashoffset: [0, -16] }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }} />
         </svg>
 
         {/* MIDDLE: Pipeline */}
-        <div className="flex-1 h-24 md:h-32 relative flex items-center justify-center z-10 mx-3 md:mx-6">
+        <div className="flex-1 h-12 md:h-32 relative flex items-center justify-center z-10 mx-2 md:mx-6">
           <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2">
             <div className="absolute -inset-y-3 left-0 right-0 bg-gradient-to-r from-amber-200/15 via-[#26a7e0]/12 to-emerald-200/15 rounded-full blur-sm" />
             <div className="h-[1.5px] bg-gradient-to-r from-amber-300/50 via-[#26a7e0]/60 to-emerald-400/50 rounded-full" />
@@ -226,18 +225,18 @@ export default function DocumentationAnimation() {
         </div>
 
         {/* Dotted connector: Pipeline → Server */}
-        <svg className="absolute right-[12%] md:right-[14%] top-1/2 -translate-y-1/2 w-[8%] h-16 z-0" viewBox="0 0 80 60" fill="none">
+        <svg className="absolute right-[12%] md:right-[14%] top-1/2 -translate-y-1/2 w-[8%] h-10 md:h-16 z-0" viewBox="0 0 80 60" fill="none">
           <motion.path d="M0,30 Q40,55 80,30" stroke="#10b981" strokeWidth="1.5" strokeDasharray="4 4" fill="none"
             animate={{ strokeDashoffset: [0, -16] }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }} />
         </svg>
 
         {/* RIGHT: Server */}
-        <div className="flex flex-col items-center space-y-2 relative z-50 flex-shrink-0">
+        <div className="flex flex-col items-center space-y-1 md:space-y-2 relative z-50 flex-shrink-0">
           <div className="relative">
             <AnimatePresence>
               {allArrived && (
                 <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
-                  className="absolute -inset-3 rounded-3xl bg-emerald-400/15 blur-lg" />
+                  className="absolute -inset-2 md:-inset-3 rounded-2xl md:rounded-3xl bg-emerald-400/15 blur-lg" />
               )}
             </AnimatePresence>
 
@@ -248,7 +247,7 @@ export default function DocumentationAnimation() {
                   : ["0 0 0 0 rgba(38,167,224,0.2)", "0 0 0 12px rgba(38,167,224,0)", "0 0 0 0 rgba(38,167,224,0)"],
               }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-              className="relative w-[150px] h-[190px] md:w-[165px] md:h-[220px] rounded-2xl shadow-2xl flex flex-col items-center border overflow-hidden transition-colors duration-700"
+              className="relative w-[100px] h-[125px] md:w-[165px] md:h-[220px] rounded-xl md:rounded-2xl shadow-2xl flex flex-col items-center border overflow-hidden transition-colors duration-700"
               style={{
                 background: allArrived ? 'linear-gradient(145deg, #065f46 0%, #064e3b 100%)' : 'linear-gradient(145deg, #00639b 0%, #003f6b 100%)',
                 borderColor: allArrived ? 'rgba(16,185,129,0.3)' : 'rgba(56,189,248,0.2)',
@@ -263,31 +262,31 @@ export default function DocumentationAnimation() {
                 <div className="h-[2px] flex-1 bg-white/60 rounded" />
               </div>
 
-              <div className="flex-1 w-full px-2 py-1 flex flex-col gap-[2px] md:gap-[3px] items-center overflow-hidden">
+              <div className="flex-1 w-full px-1.5 md:px-2 py-1 flex flex-col gap-[2px] md:gap-[3px] items-center overflow-hidden">
                 <AnimatePresence>
                   {FLYING_DOCS.filter(d => arrivedIds.has(d.id)).slice(-5).map(doc => (
                     <motion.div key={doc.id}
                       initial={{ opacity: 0, scale: 0.3, x: -30, y: 10 }}
                       animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
                       transition={{ type: "spring", stiffness: 150, damping: 14 }}
-                      className="flex items-center gap-1.5 px-2 py-[2px] md:py-[3px] rounded-lg text-[8px] md:text-[9px] font-bold text-white uppercase tracking-wider whitespace-nowrap w-full justify-center shadow-sm"
+                      className="flex items-center gap-1 md:gap-1.5 px-1 md:px-2 py-[2px] md:py-[3px] rounded md:rounded-lg text-[6px] md:text-[9px] font-bold text-white uppercase tracking-wider whitespace-nowrap w-full justify-center shadow-sm"
                       style={{ background: `linear-gradient(135deg, ${doc.color}ee, ${doc.color}bb)`, boxShadow: `0 2px 8px ${doc.color}30` }}
                     >
-                      <span className="text-[9px] md:text-[10px]">{doc.icon}</span>
+                      <span className="text-[7px] md:text-[10px]">{doc.icon}</span>
                       <span className="drop-shadow-sm">{doc.label}</span>
                     </motion.div>
                   ))}
                 </AnimatePresence>
                 {arrivedIds.size === 0 && (
                   <div className="flex-1 flex flex-col items-center justify-center gap-1 opacity-40">
-                    <Database className="w-9 h-9 md:w-11 md:h-11 text-white/50" />
-                    <span className="text-[7px] text-white/40 uppercase tracking-widest font-mono">Awaiting</span>
+                    <Database className="w-6 h-6 md:w-11 md:h-11 text-white/50" />
+                    <span className="text-[5px] md:text-[7px] text-white/40 uppercase tracking-widest font-mono">Awaiting</span>
                   </div>
                 )}
               </div>
 
-              <div className="w-full px-3 pb-2">
-                <div className="w-full h-[3px] rounded-full bg-white/10 overflow-hidden">
+              <div className="w-full px-2 md:px-3 pb-1.5 md:pb-2">
+                <div className="w-full h-[2px] md:h-[3px] rounded-full bg-white/10 overflow-hidden">
                   <motion.div className="h-full rounded-full"
                     style={{ background: allArrived ? 'linear-gradient(90deg, #34d399, #6ee7b7)' : 'linear-gradient(90deg, #26a7e0, #67d4ff)' }}
                     animate={{ width: `${progress}%` }} transition={{ duration: 0.5, ease: "easeOut" }} />
@@ -311,14 +310,14 @@ export default function DocumentationAnimation() {
             </motion.div>
           </div>
           <div className="text-center">
-            <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#00639b] font-extrabold font-mono">Bava Tech Portal</span>
+            <span className="text-[8px] md:text-xs uppercase tracking-[0.2em] text-[#00639b] font-extrabold font-mono">Bava Tech Portal</span>
             <AnimatePresence mode="wait">
               {allArrived ? (
                 <motion.p key="done" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                  className="text-[8px] md:text-[9px] text-emerald-500 font-bold mt-0.5">✓ All Securely Organized</motion.p>
+                  className="text-[7px] md:text-[9px] text-emerald-500 font-bold mt-0 md:mt-0.5">✓ All Securely Organized</motion.p>
               ) : (
                 <motion.p key="prog" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                  className="text-[8px] md:text-[9px] text-sky-400 font-medium mt-0.5 tabular-nums">Receiving {arrivedIds.size}/{FLYING_DOCS.length}</motion.p>
+                  className="text-[7px] md:text-[9px] text-sky-400 font-medium mt-0 md:mt-0.5 tabular-nums">Receiving {arrivedIds.size}/{FLYING_DOCS.length}</motion.p>
               )}
             </AnimatePresence>
           </div>
@@ -327,9 +326,9 @@ export default function DocumentationAnimation() {
 
       {/* Trust badges + Counter row */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.5 }}
-        className="flex items-center justify-center gap-3 md:gap-5 z-10 flex-wrap">
-        <div className="flex items-center gap-1.5 text-[9px] md:text-[10px] text-slate-400 font-medium">
-          <Lock className="w-3 h-3 text-emerald-500" /><span>256-bit Encrypted</span>
+        className="flex items-center justify-center gap-1.5 md:gap-5 z-10 flex-wrap mt-2 md:mt-0">
+        <div className="flex items-center gap-1 md:gap-1.5 text-[8px] md:text-[10px] text-slate-400 font-medium">
+          <Lock className="w-2.5 h-2.5 md:w-3 md:h-3 text-emerald-500" /><span>256-bit Encrypted</span>
         </div>
         <div className="w-[3px] h-[3px] rounded-full bg-slate-300" />
         <div className="flex items-center gap-1.5 text-[9px] md:text-[10px] text-slate-400 font-medium">
