@@ -3,19 +3,22 @@ import { useEffect, useRef } from 'react';
 const ParticleNetwork = () => {
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
-  const particlesRef = useRef([]);
-  const mouseRef = useRef({ x: null, y: null });
+  const papersRef = useRef([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    const COLORS = ['#26A7E0', '#1A8FBF', '#0E5A7D'];
-    const PARTICLE_COUNT = 65;
-    const LINK_DISTANCE = 160;
-    const LINK_OPACITY = 0.35;
-    const MOUSE_RADIUS = 120;
+    const COLORS = [
+      { fill: 'rgba(38, 167, 224, 0.06)', stroke: 'rgba(38, 167, 224, 0.12)' },
+      { fill: 'rgba(16, 185, 129, 0.05)', stroke: 'rgba(16, 185, 129, 0.10)' },
+      { fill: 'rgba(139, 92, 246, 0.05)', stroke: 'rgba(139, 92, 246, 0.10)' },
+      { fill: 'rgba(245, 158, 11, 0.04)', stroke: 'rgba(245, 158, 11, 0.08)' },
+      { fill: 'rgba(99, 102, 241, 0.05)', stroke: 'rgba(99, 102, 241, 0.10)' },
+    ];
+
+    const PAPER_COUNT = 18;
 
     const resize = () => {
       const parent = canvas.parentElement;
@@ -23,118 +26,98 @@ const ParticleNetwork = () => {
       canvas.height = parent.offsetHeight;
     };
 
-    class Particle {
+    class Paper {
       constructor() {
         this.reset();
       }
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        const speed = Math.random() * 1.5 + 1.0; // Base speed between 1.0 and 2.5
-        const angle = Math.random() * Math.PI * 2;
-        this.baseVx = Math.cos(angle) * speed;
-        this.baseVy = Math.sin(angle) * speed;
-        this.vx = this.baseVx;
-        this.vy = this.baseVy;
-        this.radius = Math.random() * 2.5 + 1.5;
+        this.w = Math.random() * 30 + 18;        // width 18–48
+        this.h = this.w * (Math.random() * 0.4 + 1.1); // height slightly taller
+        this.rotation = Math.random() * 360;
+        this.rotSpeed = (Math.random() - 0.5) * 0.3; // slow rotation
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = -(Math.random() * 0.5 + 0.15); // gentle upward float
         this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-        this.opacity = Math.random() * 0.3 + 0.5;
+        this.opacity = Math.random() * 0.5 + 0.3;
+        this.cornerRadius = 3;
+        // "Content lines" on the paper
+        this.lineCount = Math.floor(Math.random() * 3) + 2;
       }
       update() {
-        // Mouse repulsion
-        const mx = mouseRef.current.x;
-        const my = mouseRef.current.y;
-        if (mx !== null && my !== null) {
-          const dx = this.x - mx;
-          const dy = this.y - my;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < MOUSE_RADIUS) {
-            const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
-            this.vx += (dx / dist) * force * 1.5;
-            this.vy += (dy / dist) * force * 1.5;
-          }
-        }
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.rotation += this.rotSpeed;
 
-        // Return to base velocity smoothly
-        this.vx += (this.baseVx - this.vx) * 0.05;
-        this.vy += (this.baseVy - this.vy) * 0.05;
-
-        this.x += this.vx;
-        this.y += this.vy;
-
-        // Bounce off edges
-        if (this.x < 0 || this.x > canvas.width) {
-          this.vx *= -1;
-          this.baseVx *= -1;
+        // Wrap around edges
+        if (this.y + this.h < -20) {
+          this.y = canvas.height + 20;
+          this.x = Math.random() * canvas.width;
         }
-        if (this.y < 0 || this.y > canvas.height) {
-          this.vy *= -1;
-          this.baseVy *= -1;
-        }
-        this.x = Math.max(0, Math.min(canvas.width, this.x));
-        this.y = Math.max(0, Math.min(canvas.height, this.y));
+        if (this.x > canvas.width + 40) this.x = -40;
+        if (this.x < -40) this.x = canvas.width + 40;
       }
       draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
         ctx.globalAlpha = this.opacity;
+
+        // Paper background
+        const r = this.cornerRadius;
+        ctx.beginPath();
+        ctx.moveTo(-this.w / 2 + r, -this.h / 2);
+        ctx.lineTo(this.w / 2 - r, -this.h / 2);
+        ctx.quadraticCurveTo(this.w / 2, -this.h / 2, this.w / 2, -this.h / 2 + r);
+        ctx.lineTo(this.w / 2, this.h / 2 - r);
+        ctx.quadraticCurveTo(this.w / 2, this.h / 2, this.w / 2 - r, this.h / 2);
+        ctx.lineTo(-this.w / 2 + r, this.h / 2);
+        ctx.quadraticCurveTo(-this.w / 2, this.h / 2, -this.w / 2, this.h / 2 - r);
+        ctx.lineTo(-this.w / 2, -this.h / 2 + r);
+        ctx.quadraticCurveTo(-this.w / 2, -this.h / 2, -this.w / 2 + r, -this.h / 2);
+        ctx.closePath();
+
+        ctx.fillStyle = this.color.fill;
         ctx.fill();
-        ctx.globalAlpha = 1;
+        ctx.strokeStyle = this.color.stroke;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Content lines on paper
+        const lineStartY = -this.h / 2 + this.h * 0.3;
+        const lineSpacing = (this.h * 0.5) / this.lineCount;
+        for (let i = 0; i < this.lineCount; i++) {
+          const lw = this.w * (0.5 + Math.random() * 0.3);
+          ctx.beginPath();
+          ctx.moveTo(-lw / 2, lineStartY + i * lineSpacing);
+          ctx.lineTo(lw / 2, lineStartY + i * lineSpacing);
+          ctx.strokeStyle = this.color.stroke;
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+        }
+
+        ctx.restore();
       }
     }
 
     const init = () => {
       resize();
-      particlesRef.current = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
-    };
-
-    const drawLinks = () => {
-      const particles = particlesRef.current;
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < LINK_DISTANCE) {
-            const opacity = LINK_OPACITY * (1 - dist / LINK_DISTANCE);
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(26, 143, 191, ${opacity})`;
-            ctx.lineWidth = 1.2;
-            ctx.stroke();
-          }
-        }
-      }
+      papersRef.current = Array.from({ length: PAPER_COUNT }, () => new Paper());
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const particles = particlesRef.current;
-      particles.forEach(p => {
+      papersRef.current.forEach((p) => {
         p.update();
         p.draw();
       });
-      drawLinks();
       animationRef.current = requestAnimationFrame(animate);
-    };
-
-    const handleMouseMove = (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current.x = e.clientX - rect.left;
-      mouseRef.current.y = e.clientY - rect.top;
-    };
-
-    const handleMouseLeave = () => {
-      mouseRef.current.x = null;
-      mouseRef.current.y = null;
     };
 
     const handleResize = () => {
       resize();
-      // Reposition particles that are out of bounds
-      particlesRef.current.forEach(p => {
+      papersRef.current.forEach((p) => {
         if (p.x > canvas.width) p.x = canvas.width * Math.random();
         if (p.y > canvas.height) p.y = canvas.height * Math.random();
       });
@@ -143,14 +126,10 @@ const ParticleNetwork = () => {
     init();
     animate();
 
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('resize', handleResize);
 
     return () => {
       cancelAnimationFrame(animationRef.current);
-      canvas.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -164,7 +143,7 @@ const ParticleNetwork = () => {
         left: 0,
         width: '100%',
         height: '100%',
-        pointerEvents: 'auto',
+        pointerEvents: 'none',
       }}
     />
   );
