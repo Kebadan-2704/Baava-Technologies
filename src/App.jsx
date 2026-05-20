@@ -49,11 +49,11 @@ const MouseGlow = memo(() => {
 
 function FeatureCard({ icon, title, description }) {
   return (
-    <div className="flex flex-col items-center justify-center text-center p-2 md:p-6 bg-white/40 backdrop-blur-md rounded-xl md:rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
-      <div className="w-8 h-8 md:w-12 md:h-12 bg-slate-50 rounded-full flex items-center justify-center mb-2 md:mb-4 group-hover:bg-[#26a7e0]/10 transition-colors duration-300">
-        {React.cloneElement(icon, { className: "w-4 h-4 md:w-5 md:h-5 text-[#26a7e0]" })}
+    <div className="flex flex-col items-center justify-center text-center p-2 md:p-6 bg-white/40 backdrop-blur-md rounded-xl md:rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group h-full">
+      <div className="w-7 h-7 md:w-12 md:h-12 bg-slate-50 rounded-full flex items-center justify-center mb-1.5 md:mb-4 group-hover:bg-[#26a7e0]/10 transition-colors duration-300">
+        {React.cloneElement(icon, { className: "w-3.5 h-3.5 md:w-5 md:h-5 text-[#26a7e0]" })}
       </div>
-      <h3 className="text-[8px] leading-tight md:text-base font-black text-slate-700 uppercase tracking-widest mb-0 md:mb-3">{title}</h3>
+      <h3 className="text-[8px] md:text-base font-black text-slate-700 uppercase tracking-wide md:tracking-widest mb-0 md:mb-3 leading-tight md:leading-normal">{title}</h3>
       <p className="hidden md:block text-xs md:text-sm text-slate-500 font-medium leading-relaxed max-w-sm">
         {description}
       </p>
@@ -88,7 +88,7 @@ function App() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
-        className="absolute top-4 right-4 md:top-8 md:right-8 z-50 flex items-center gap-2 md:gap-2.5 bg-white/80 backdrop-blur-md border border-slate-200/60 px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-[0_4px_15px_-3px_rgba(0,0,0,0.05)] cursor-default scale-90 md:scale-100 origin-top-right animate-float-logo"
+        className="absolute top-4 right-4 md:top-8 md:right-8 z-50 hidden md:flex items-center gap-2 md:gap-2.5 bg-white/80 backdrop-blur-md border border-slate-200/60 px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-[0_4px_15px_-3px_rgba(0,0,0,0.05)] cursor-default scale-90 md:scale-100 origin-top-right animate-float-logo"
       >
         <div className="relative flex items-center justify-center w-2.5 h-2.5">
           <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-75" />
@@ -106,14 +106,14 @@ function App() {
       >
         {/* TOP: Animated Logo Image */}
         <motion.div variants={itemVariants} className="flex flex-col items-center select-none w-full max-w-3xl mt-1 md:mt-4 relative z-20">
-          <div className="relative w-full p-1 md:p-1.5 bg-white rounded-xl md:rounded-[1.5rem] shadow-[0_15px_50px_-15px_rgba(38,167,224,0.15)] border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(38,167,224,0.3)] group">
+          <div className="relative w-[85%] md:w-full px-6 py-2 md:p-1.5 bg-white rounded-xl md:rounded-[1.5rem] shadow-[0_15px_50px_-15px_rgba(38,167,224,0.15)] border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(38,167,224,0.3)] group">
             
             {/* The Logo with 3D Float */}
             <div className="animate-float-logo flex justify-center">
               <img 
                 src="/logo.png" 
                 alt="Baava Tech Logo" 
-                className="w-auto h-auto max-h-[50px] md:max-h-[220px] object-contain rounded-lg md:rounded-[1.25rem] group-hover:scale-[1.02] transition-transform duration-700 pointer-events-none" 
+                className="w-auto h-auto max-h-[45px] md:max-h-[220px] object-contain rounded-lg md:rounded-[1.25rem] group-hover:scale-[1.02] transition-transform duration-700 pointer-events-none" 
               />
             </div>
 

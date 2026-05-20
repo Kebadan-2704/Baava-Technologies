@@ -148,7 +148,7 @@ export default function DocumentationAnimation() {
     <div className="w-full py-1 flex flex-col items-center justify-center space-y-1 md:space-y-4 relative overflow-hidden">
 
         {/* Title Section */}
-        <div className="flex flex-col items-center space-y-1 md:space-y-3 z-20 mb-3 md:mb-12">
+        <div className="flex flex-col items-center space-y-1 md:space-y-3 z-20 mb-2 md:mb-12">
           <div className="flex items-center gap-1.5 md:gap-3">
             <ArrowDownToLine className="w-4 h-4 md:w-6 md:h-6 text-[#26a7e0] animate-bounce" />
             <h1 className="text-[10px] md:text-base font-black tracking-[0.1em] md:tracking-[0.3em] uppercase animate-text-shimmer">
@@ -165,7 +165,7 @@ export default function DocumentationAnimation() {
 
         {/* LEFT: Inbox */}
         <div className="flex flex-col items-center space-y-1 md:space-y-2 relative z-20 flex-shrink-0">
-          <div className="relative w-[90px] h-[100px] md:w-[155px] md:h-[165px] flex items-center justify-center">
+          <div className="relative w-[85px] h-[95px] md:w-[155px] md:h-[165px] flex items-center justify-center">
             <motion.div animate={{ opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 3, repeat: Infinity }}
               className="absolute inset-0 rounded-2xl bg-amber-100/50 blur-md" />
             <div className="absolute inset-2 rounded-2xl bg-gradient-to-b from-white to-amber-50/80 border-2 border-dashed border-amber-300/50 shadow-inner" />
@@ -247,7 +247,7 @@ export default function DocumentationAnimation() {
                   : ["0 0 0 0 rgba(38,167,224,0.2)", "0 0 0 12px rgba(38,167,224,0)", "0 0 0 0 rgba(38,167,224,0)"],
               }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-              className="relative w-[100px] h-[125px] md:w-[165px] md:h-[220px] rounded-xl md:rounded-2xl shadow-2xl flex flex-col items-center border overflow-hidden transition-colors duration-700"
+              className="relative w-[95px] h-[120px] md:w-[165px] md:h-[220px] rounded-xl md:rounded-2xl shadow-2xl flex flex-col items-center border overflow-hidden transition-colors duration-700"
               style={{
                 background: allArrived ? 'linear-gradient(145deg, #065f46 0%, #064e3b 100%)' : 'linear-gradient(145deg, #00639b 0%, #003f6b 100%)',
                 borderColor: allArrived ? 'rgba(16,185,129,0.3)' : 'rgba(56,189,248,0.2)',
@@ -326,20 +326,20 @@ export default function DocumentationAnimation() {
 
       {/* Trust badges + Counter row */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.5 }}
-        className="flex items-center justify-center gap-1.5 md:gap-5 z-10 flex-wrap mt-2 md:mt-0">
+        className="flex items-center justify-center gap-x-2 gap-y-1 md:gap-5 z-10 flex-wrap mt-2 md:mt-0 max-w-[260px] md:max-w-none mx-auto">
         <div className="flex items-center gap-1 md:gap-1.5 text-[8px] md:text-[10px] text-slate-400 font-medium">
           <Lock className="w-2.5 h-2.5 md:w-3 md:h-3 text-emerald-500" /><span>256-bit Encrypted</span>
         </div>
-        <div className="w-[3px] h-[3px] rounded-full bg-slate-300" />
-        <div className="flex items-center gap-1.5 text-[9px] md:text-[10px] text-slate-400 font-medium">
-          <Zap className="w-3 h-3 text-amber-500" /><span>99.9% Uptime</span>
+        <div className="hidden md:block w-[3px] h-[3px] rounded-full bg-slate-300" />
+        <div className="flex items-center gap-1 md:gap-1.5 text-[8px] md:text-[10px] text-slate-400 font-medium">
+          <Zap className="w-2.5 h-2.5 md:w-3 md:h-3 text-amber-500" /><span>99.9% Uptime</span>
+        </div>
+        <div className="hidden md:block w-[3px] h-[3px] rounded-full bg-slate-300" />
+        <div className="flex items-center gap-1 md:gap-1.5 text-[8px] md:text-[10px] text-slate-400 font-medium">
+          <Globe className="w-2.5 h-2.5 md:w-3 md:h-3 text-[#26a7e0]" /><span>Global Access</span>
         </div>
         <div className="w-[3px] h-[3px] rounded-full bg-slate-300" />
-        <div className="flex items-center gap-1.5 text-[9px] md:text-[10px] text-slate-400 font-medium">
-          <Globe className="w-3 h-3 text-[#26a7e0]" /><span>Global Access</span>
-        </div>
-        <div className="w-[3px] h-[3px] rounded-full bg-slate-300" />
-        <div className="flex items-center gap-1.5 text-[9px] md:text-[10px] text-[#26a7e0] font-bold">
+        <div className="flex items-center gap-1 md:gap-1.5 text-[8px] md:text-[10px] text-[#26a7e0] font-bold w-full md:w-auto justify-center mt-0.5 md:mt-0">
           <span>📄</span><span><AnimatedCounter target={10000} /> Documents Processed</span>
         </div>
       </motion.div>
