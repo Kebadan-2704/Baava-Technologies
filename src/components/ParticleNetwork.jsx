@@ -1,150 +1,112 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const ParticleNetwork = () => {
   const canvasRef = useRef(null);
-  const animationRef = useRef(null);
-  const papersRef = useRef([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    let particles = [];
+    
+    // Configuration
+    const particleCount = Math.min(window.innerWidth / 15, 100); // Responsive count
+    const connectionDistance = 120;
+    const colors = ['#26a7e0', '#10b981', '#8b5cf6']; // Brand blue, emerald, violet
 
-    const COLORS = [
-      { fill: 'rgba(38, 167, 224, 0.06)', stroke: 'rgba(38, 167, 224, 0.12)' },
-      { fill: 'rgba(16, 185, 129, 0.05)', stroke: 'rgba(16, 185, 129, 0.10)' },
-      { fill: 'rgba(139, 92, 246, 0.05)', stroke: 'rgba(139, 92, 246, 0.10)' },
-      { fill: 'rgba(245, 158, 11, 0.04)', stroke: 'rgba(245, 158, 11, 0.08)' },
-      { fill: 'rgba(99, 102, 241, 0.05)', stroke: 'rgba(99, 102, 241, 0.10)' },
-    ];
-
-    const PAPER_COUNT = 18;
-
-    const resize = () => {
-      const parent = canvas.parentElement;
-      canvas.width = parent.offsetWidth;
-      canvas.height = parent.offsetHeight;
-    };
-
-    class Paper {
-      constructor() {
-        this.reset();
+    class Particle {
+      constructor(canvasWidth, canvasHeight) {
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
+        this.x = Math.random() * canvasWidth;
+        this.y = Math.random() * canvasHeight;
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+        this.radius = Math.random() * 1.5 + 1;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
       }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.w = Math.random() * 30 + 18;        // width 18–48
-        this.h = this.w * (Math.random() * 0.4 + 1.1); // height slightly taller
-        this.rotation = Math.random() * 360;
-        this.rotSpeed = (Math.random() - 0.5) * 0.3; // slow rotation
-        this.speedX = (Math.random() - 0.5) * 0.4;
-        this.speedY = -(Math.random() * 0.5 + 0.15); // gentle upward float
-        this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-        this.opacity = Math.random() * 0.5 + 0.3;
-        this.cornerRadius = 3;
-        // "Content lines" on the paper
-        this.lineCount = Math.floor(Math.random() * 3) + 2;
-      }
+
       update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.rotation += this.rotSpeed;
+        this.x += this.vx;
+        this.y += this.vy;
 
-        // Wrap around edges
-        if (this.y + this.h < -20) {
-          this.y = canvas.height + 20;
-          this.x = Math.random() * canvas.width;
-        }
-        if (this.x > canvas.width + 40) this.x = -40;
-        if (this.x < -40) this.x = canvas.width + 40;
+        // Bounce off edges smoothly
+        if (this.x < 0 || this.x > this.canvasWidth) this.vx *= -1;
+        if (this.y < 0 || this.y > this.canvasHeight) this.vy *= -1;
       }
-      draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate((this.rotation * Math.PI) / 180);
-        ctx.globalAlpha = this.opacity;
 
-        // Paper background
-        const r = this.cornerRadius;
+      draw(ctx) {
         ctx.beginPath();
-        ctx.moveTo(-this.w / 2 + r, -this.h / 2);
-        ctx.lineTo(this.w / 2 - r, -this.h / 2);
-        ctx.quadraticCurveTo(this.w / 2, -this.h / 2, this.w / 2, -this.h / 2 + r);
-        ctx.lineTo(this.w / 2, this.h / 2 - r);
-        ctx.quadraticCurveTo(this.w / 2, this.h / 2, this.w / 2 - r, this.h / 2);
-        ctx.lineTo(-this.w / 2 + r, this.h / 2);
-        ctx.quadraticCurveTo(-this.w / 2, this.h / 2, -this.w / 2, this.h / 2 - r);
-        ctx.lineTo(-this.w / 2, -this.h / 2 + r);
-        ctx.quadraticCurveTo(-this.w / 2, -this.h / 2, -this.w / 2 + r, -this.h / 2);
-        ctx.closePath();
-
-        ctx.fillStyle = this.color.fill;
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
         ctx.fill();
-        ctx.strokeStyle = this.color.stroke;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Content lines on paper
-        const lineStartY = -this.h / 2 + this.h * 0.3;
-        const lineSpacing = (this.h * 0.5) / this.lineCount;
-        for (let i = 0; i < this.lineCount; i++) {
-          const lw = this.w * (0.5 + Math.random() * 0.3);
-          ctx.beginPath();
-          ctx.moveTo(-lw / 2, lineStartY + i * lineSpacing);
-          ctx.lineTo(lw / 2, lineStartY + i * lineSpacing);
-          ctx.strokeStyle = this.color.stroke;
-          ctx.lineWidth = 1.2;
-          ctx.stroke();
-        }
-
-        ctx.restore();
+        
+        // Add subtle glow to particles
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
       }
     }
 
     const init = () => {
-      resize();
-      papersRef.current = Array.from({ length: PAPER_COUNT }, () => new Paper());
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle(canvas.width, canvas.height));
+      }
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      papersRef.current.forEach((p) => {
-        p.update();
-        p.draw();
-      });
-      animationRef.current = requestAnimationFrame(animate);
+      ctx.shadowBlur = 0; // Reset shadow for lines
+      
+      // Update and draw connections
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < connectionDistance) {
+            // Opacity based on distance
+            const opacity = 1 - (distance / connectionDistance);
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(38, 167, 224, ${opacity * 0.25})`; // Subtle blue connections
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+        
+        particles[i].draw(ctx);
+      }
+      
+      animationFrameId = requestAnimationFrame(animate);
     };
 
     const handleResize = () => {
-      resize();
-      papersRef.current.forEach((p) => {
-        if (p.x > canvas.width) p.x = canvas.width * Math.random();
-        if (p.y > canvas.height) p.y = canvas.height * Math.random();
-      });
+      init();
     };
 
+    window.addEventListener('resize', handleResize);
     init();
     animate();
 
-    window.addEventListener('resize', handleResize);
-
     return () => {
-      cancelAnimationFrame(animationRef.current);
       window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-      }}
+      className="absolute inset-0 pointer-events-none z-[1]"
+      style={{ opacity: 0.8 }}
     />
   );
 };

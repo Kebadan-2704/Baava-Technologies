@@ -104,36 +104,12 @@
   animation: text-shimmer 4s linear infinite;
 }
 
-@keyframes float-node {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
-  33% { transform: translate(30px, -40px) scale(1.5); opacity: 0.6; }
-  66% { transform: translate(-20px, 30px) scale(0.8); opacity: 0.1; }
-}
-
 @keyframes pulse-slow {
   0%, 100% { transform: scale(1); opacity: 0.8; }
   50% { transform: scale(1.05); opacity: 0.5; }
 }
 
-.animate-float-node {
-  animation: float-node 15s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-
 .animate-pulse-slow {
   animation: pulse-slow 8s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-
-@keyframes float-paper {
-  0% { transform: translateY(20vh) rotate(var(--start-rot)) translateZ(0); opacity: 0; }
-  10% { opacity: var(--max-opacity); }
-  90% { opacity: var(--max-opacity); }
-  100% { transform: translateY(-120vh) rotate(var(--end-rot)) translateZ(0); opacity: 0; }
-}
-
-.animate-float-paper {
-  animation: float-paper var(--duration) linear infinite;
-  animation-delay: var(--delay);
   will-change: transform, opacity;
 }
