@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://baavatech.com/sitemap.xml
