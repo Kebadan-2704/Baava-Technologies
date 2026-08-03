@@ -32,6 +32,34 @@ export default {
           800: "#0c5a48",
           900: "#0b4a3c",
         },
+        /* Steel-blue metallic palette — matches logo */
+        steel: {
+          50:  "#f6f7f9",
+          100: "#eceef2",
+          200: "#d5dae3",
+          300: "#b0b9cb",
+          400: "#8593ae",
+          500: "#667594",
+          600: "#515e7b",
+          700: "#434d64",
+          800: "#3a4255",
+          900: "#333a48",
+          950: "#22272f",
+        },
+        /* Warm sand palette — background tones */
+        sand: {
+          50:  "#faf9f7",
+          100: "#f5f3f0",
+          200: "#eae7e2",
+          300: "#ddd8d0",
+          400: "#c4bcb0",
+          500: "#b0a594",
+          600: "#9a8d7c",
+          700: "#807467",
+          800: "#6b6158",
+          900: "#5a524a",
+          950: "#2f2b27",
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
@@ -71,6 +99,9 @@ export default {
         'button-hover': '0 2px 4px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.12)',
         'glow-blue': '0 0 40px -10px rgba(56, 152, 247, 0.4)',
         'glow-teal': '0 0 40px -10px rgba(26, 174, 134, 0.4)',
+        'steel': '0 2px 8px rgba(51, 58, 72, 0.08), 0 12px 32px rgba(51, 58, 72, 0.06)',
+        'steel-hover': '0 4px 16px rgba(51, 58, 72, 0.1), 0 24px 48px rgba(51, 58, 72, 0.12)',
+        'warm': '0 4px 20px rgba(90, 82, 74, 0.06)',
       },
       animation: {
         'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
@@ -78,6 +109,8 @@ export default {
         'gradient-shift': 'gradientShift 8s ease infinite',
         'gentle-pulse': 'gentlePulse 3s ease-in-out infinite',
         'shine-sweep': 'shineSweep 7s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+        'accordion-down': 'accordionDown 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+        'accordion-up': 'accordionUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       },
       keyframes: {
         fadeInUp: {
@@ -102,6 +135,14 @@ export default {
           '5%': { opacity: '0.8' },
           '15%': { transform: 'translateX(200%) skewX(-15deg)', opacity: '0' },
           '100%': { transform: 'translateX(200%) skewX(-15deg)', opacity: '0' },
+        },
+        accordionDown: {
+          'from': { height: '0', opacity: '0' },
+          'to': { height: 'var(--accordion-height)', opacity: '1' },
+        },
+        accordionUp: {
+          'from': { height: 'var(--accordion-height)', opacity: '1' },
+          'to': { height: '0', opacity: '0' },
         },
       },
       transitionTimingFunction: {

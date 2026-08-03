@@ -33,22 +33,36 @@
   --color-accent-800: #0c5a48;
   --color-accent-900: #0b4a3c;
 
-  /* Neutral Palette */
-  --color-surface: #ffffff;
-  --color-surface-alt: #f8fafc;
-  --color-surface-elevated: #ffffff;
-  --color-border: #e2e8f0;
-  --color-border-subtle: #f1f5f9;
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #475569;
-  --color-text-tertiary: #94a3b8;
-  --color-text-inverse: #ffffff;
+  /* Steel-Blue Metallic Palette */
+  --color-steel-50: #f6f7f9;
+  --color-steel-100: #eceef2;
+  --color-steel-200: #d5dae3;
+  --color-steel-300: #b0b9cb;
+  --color-steel-400: #8593ae;
+  --color-steel-500: #667594;
+  --color-steel-600: #515e7b;
+  --color-steel-700: #434d64;
+  --color-steel-800: #3a4255;
+  --color-steel-900: #333a48;
+  --color-steel-950: #22272f;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.04);
+  /* Warm Sand Neutral Palette */
+  --color-surface: #faf9f7;
+  --color-surface-alt: #f5f3f0;
+  --color-surface-warm: #eae7e2;
+  --color-surface-elevated: #ffffff;
+  --color-border: #ddd8d0;
+  --color-border-subtle: #eae7e2;
+  --color-text-primary: #22272f;
+  --color-text-secondary: #515e7b;
+  --color-text-tertiary: #8593ae;
+  --color-text-inverse: #faf9f7;
+
+  /* Shadows — Warm metallic */
+  --shadow-sm: 0 1px 2px 0 rgb(51 58 72 / 0.04);
+  --shadow-md: 0 4px 6px -1px rgb(51 58 72 / 0.06), 0 2px 4px -2px rgb(51 58 72 / 0.04);
+  --shadow-lg: 0 10px 15px -3px rgb(51 58 72 / 0.07), 0 4px 6px -4px rgb(51 58 72 / 0.03);
+  --shadow-xl: 0 20px 25px -5px rgb(51 58 72 / 0.08), 0 8px 10px -6px rgb(51 58 72 / 0.03);
   --shadow-glow: 0 0 40px -10px var(--color-primary-400);
 
   /* Radius */
@@ -78,7 +92,9 @@
   }
 
   body {
-    @apply bg-white text-slate-900 font-sans;
+    @apply font-sans;
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     overflow-x: hidden;
   }
@@ -105,11 +121,11 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: var(--color-steel-300);
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: var(--color-steel-400);
   }
 }
 
@@ -198,6 +214,12 @@
   75% { transform: translate(-15px, -10px) scale(1.05); opacity: 0.5; }
 }
 
+/* Pipeline flow for process connectors */
+@keyframes pipelineFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
 /* ════════════════════════════════════════════
    UTILITY CLASSES
    ════════════════════════════════════════════ */
@@ -245,26 +267,29 @@
   animation: drift 8s ease-in-out infinite;
 }
 
-/* VisionOS Glassmorphism */
+/* VisionOS Glassmorphism — Warm tint */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(250, 249, 247, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(221, 216, 208, 0.5);
   box-shadow: 
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
-    0 4px 24px -4px rgba(15, 23, 42, 0.05);
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.6),
+    0 4px 24px -4px rgba(51, 58, 72, 0.06);
 }
 
-.dark .glass-panel {
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* Steel glassmorphism for dark sections */
+.glass-steel {
+  background: rgba(34, 39, 47, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(133, 147, 174, 0.15);
   box-shadow: 
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
-    0 4px 24px -4px rgba(0, 0, 0, 0.5);
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+    0 4px 24px -4px rgba(0, 0, 0, 0.3);
 }
 
-/* Ambient Aurora Background */
+/* Ambient Aurora Background — Warm steel */
 @keyframes aurora {
   0% { background-position: 50% 50%, 50% 50%; }
   50% { background-position: 100% 50%, 0% 50%; }
@@ -273,21 +298,23 @@
 
 .bg-aurora {
   background-image: 
-    radial-gradient(ellipse at 100% 0%, rgba(56, 152, 247, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 0% 100%, rgba(26, 174, 134, 0.15) 0%, transparent 50%);
+    radial-gradient(ellipse at 100% 0%, rgba(56, 152, 247, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 0% 100%, rgba(102, 117, 148, 0.08) 0%, transparent 50%);
   background-size: 200% 200%;
   animation: aurora 20s ease-in-out infinite;
-}
-
-.dark .bg-aurora {
-  background-image: 
-    radial-gradient(ellipse at 100% 0%, rgba(56, 152, 247, 0.25) 0%, transparent 50%),
-    radial-gradient(ellipse at 0% 100%, rgba(26, 174, 134, 0.2) 0%, transparent 50%);
 }
 
 /* Premium gradient text */
 .gradient-text {
   background: linear-gradient(135deg, var(--color-primary-600), var(--color-accent-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Steel gradient text — for headings */
+.gradient-text-steel {
+  background: linear-gradient(135deg, var(--color-steel-950), var(--color-primary-700));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -300,6 +327,101 @@
 
 .container-width {
   @apply max-w-7xl mx-auto px-5 sm:px-8 lg:px-12;
+}
+
+/* Card surface — elevated warm white */
+.card-surface {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.5s var(--ease-out-expo);
+}
+
+.card-surface:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-border);
+}
+
+/* Section badge — consistent pill styling */
+.section-badge {
+  @apply inline-flex items-center gap-2 text-overline uppercase tracking-widest px-4 py-1.5 rounded-full;
+  background: rgba(56, 152, 247, 0.06);
+  border: 1px solid rgba(56, 152, 247, 0.12);
+  color: var(--color-primary-600);
+}
+
+/* Industrial grid pattern */
+.industrial-grid {
+  background-image: 
+    linear-gradient(to right, var(--color-steel-200) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-steel-200) 1px, transparent 1px);
+  background-size: 3rem 3rem;
+}
+
+/* Pipeline connector for process section */
+.pipeline-connector {
+  background: linear-gradient(90deg, 
+    var(--color-steel-200) 0%,
+    var(--color-primary-300) 50%,
+    var(--color-steel-200) 100%
+  );
+  background-size: 200% 100%;
+  animation: pipelineFlow 3s linear infinite;
+}
+
+/* ════════════════════════════════════════════
+   STEEL BLUE (DARK) THEME OVERRIDES
+   ════════════════════════════════════════════ */
+.theme-steel .glass-panel {
+  background: rgba(37, 45, 62, 0.7);
+  border-color: rgba(58, 66, 85, 0.5);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.04),
+    0 4px 24px -4px rgba(0, 0, 0, 0.3);
+}
+
+.theme-steel .gradient-text {
+  background: linear-gradient(135deg, #5db6fb, #3ec99f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.theme-steel .gradient-text-steel {
+  background: linear-gradient(135deg, #e8eaf0, #5db6fb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.theme-steel .card-surface {
+  background: var(--color-surface-elevated);
+  border-color: var(--color-border-subtle);
+}
+
+.theme-steel .section-badge {
+  background: rgba(93, 182, 251, 0.08);
+  border-color: rgba(93, 182, 251, 0.15);
+  color: #5db6fb;
+}
+
+.theme-steel .bg-aurora {
+  background-image: 
+    radial-gradient(ellipse at 100% 0%, rgba(56, 152, 247, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 0% 100%, rgba(62, 201, 159, 0.04) 0%, transparent 50%);
+}
+
+.theme-steel ::selection {
+  background: rgba(56, 152, 247, 0.3);
+  color: #e8eaf0;
+}
+
+.theme-steel ::-webkit-scrollbar-thumb {
+  background: #3a4255;
+}
+
+.theme-steel ::-webkit-scrollbar-thumb:hover {
+  background: #515e7b;
 }
 
 /* ════════════════════════════════════════════
