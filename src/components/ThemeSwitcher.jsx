@@ -58,7 +58,14 @@ const THEMES = [
 ];
 
 export default function ThemeSwitcher() {
-  const [activeTheme, setActiveTheme] = useState('sand');
+  const [activeTheme, setActiveTheme] = useState(() => {
+    const saved = localStorage.getItem('baava_theme');
+    if (saved) return saved;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'steel';
+    }
+    return 'sand';
+  });
   const [isOpen, setIsOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
 
@@ -76,6 +83,8 @@ export default function ThemeSwitcher() {
     } else {
       root.classList.remove('theme-steel');
     }
+
+    localStorage.setItem('baava_theme', activeTheme);
   }, [activeTheme]);
 
   const toggleSound = () => {

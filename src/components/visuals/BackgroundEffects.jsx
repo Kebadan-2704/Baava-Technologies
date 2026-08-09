@@ -11,7 +11,7 @@ function NetworkCanvas() {
   const particlesRef = useRef([]);
 
   const initParticles = useCallback((w, h) => {
-    const count = Math.min(Math.floor((w * h) / 25000), 40);
+    const count = Math.min(Math.floor((w * h) / 30000), 25);
     return Array.from({ length: count }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
@@ -47,7 +47,10 @@ function NetworkCanvas() {
       ctx.clearRect(0, 0, w, h);
 
       const particles = particlesRef.current;
-      const connectionDist = 120;
+      const connectionDist = 90;
+      
+      const isSteel = document.documentElement.classList.contains('theme-steel');
+      const rgb = isSteel ? '100, 116, 139' : '133, 147, 174';
 
       // Update positions
       for (const p of particles) {
@@ -70,7 +73,7 @@ function NetworkCanvas() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(102, 117, 148, ${alpha})`;
+            ctx.strokeStyle = `rgba(${rgb}, ${alpha})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -81,7 +84,7 @@ function NetworkCanvas() {
       for (const p of particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(102, 117, 148, ${p.opacity})`;
+        ctx.fillStyle = `rgba(${rgb}, ${p.opacity})`;
         ctx.fill();
       }
 
@@ -134,9 +137,9 @@ export default function BackgroundEffects() {
       <NetworkCanvas />
       
       {/* Gradient blobs — warm steel */}
-      <div className="absolute top-[-15%] left-[-8%] w-[45%] h-[55%] bg-gradient-to-br from-brand-200/8 to-transparent rounded-full blur-[100px]" />
-      <div className="absolute bottom-[-15%] right-[-8%] w-[40%] h-[50%] bg-gradient-to-tl from-steel-200/8 to-transparent rounded-full blur-[100px]" />
-      <div className="absolute top-[40%] right-[20%] w-[20%] h-[25%] bg-gradient-to-bl from-accent-200/5 to-transparent rounded-full blur-[80px]" />
+      <div className="absolute top-[-15%] left-[-8%] w-[45%] h-[55%] bg-gradient-to-br from-brand-200/8 to-transparent rounded-full blur-[100px] animate-drift" style={{ animationDuration: '15s' }} />
+      <div className="absolute bottom-[-15%] right-[-8%] w-[40%] h-[50%] bg-gradient-to-tl from-steel-200/8 to-transparent rounded-full blur-[100px] animate-drift" style={{ animationDuration: '20s', animationDirection: 'reverse' }} />
+      <div className="absolute top-[40%] right-[20%] w-[20%] h-[25%] bg-gradient-to-bl from-accent-200/5 to-transparent rounded-full blur-[80px] animate-drift" style={{ animationDuration: '18s', animationDelay: '2s' }} />
     </div>
   );
 }

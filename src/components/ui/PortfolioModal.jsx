@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, BarChart3, Database, ShieldCheck } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, BarChart3, Database, ShieldCheck, Clock, Users, Layers, Workflow } from 'lucide-react';
 import { uiSounds } from '../../utils/sounds';
 
 const CASE_STUDIES = [
@@ -13,7 +13,10 @@ const CASE_STUDIES = [
     icon: Database,
     description: 'Executed a flawless legacy data migration to SAP S/4HANA for a Tier-1 automotive manufacturer, reducing real-time sync latency from 24 hours to sub-second.',
     color: '#1e78ec',
-    visual: 'radial-gradient(circle at 80% 20%, rgba(30,120,236,0.15) 0%, transparent 50%)'
+    techStack: ['SAP S/4HANA', 'ABAP', 'REST APIs', 'PostgreSQL'],
+    timeline: '6 months',
+    teamSize: '12 engineers',
+    highlights: ['2.4M records migrated with zero data loss', 'Sub-second real-time synchronization', '3 legacy systems decommissioned'],
   },
   {
     id: 2,
@@ -24,7 +27,10 @@ const CASE_STUDIES = [
     icon: ShieldCheck,
     description: 'Implemented an automated Bill of Materials tracking system with strict ECO version control, ensuring zero-defect compliance for military-grade manufacturing.',
     color: '#0e8d6d',
-    visual: 'radial-gradient(circle at 20% 80%, rgba(14,141,109,0.15) 0%, transparent 50%)'
+    techStack: ['Oracle PLM', 'Python', 'Kafka', 'MongoDB'],
+    timeline: '8 months',
+    teamSize: '8 engineers',
+    highlights: ['Zero defects across 15,000+ components', 'Automated ECO change tracking', 'MIL-STD compliance verified'],
   },
   {
     id: 3,
@@ -35,14 +41,17 @@ const CASE_STUDIES = [
     icon: BarChart3,
     description: 'Deployed intelligent RPA bots to handle 50,000+ monthly vendor invoices, eliminating human data entry errors and accelerating procurement cycles.',
     color: '#f59e0b',
-    visual: 'radial-gradient(circle at 50% 50%, rgba(245,158,11,0.15) 0%, transparent 70%)'
+    techStack: ['UiPath', 'Power Automate', 'Azure OCR', 'SQL Server'],
+    timeline: '4 months',
+    teamSize: '6 engineers',
+    highlights: ['50,000+ monthly invoices automated', '99.7% data extraction accuracy', 'ROI achieved within 3 months'],
   }
 ];
 
 export default function PortfolioModal({ isOpen, onClose }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Close on Escape
+  // Close on Escape, arrow keys for navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) {
@@ -90,20 +99,24 @@ export default function PortfolioModal({ isOpen, onClose }) {
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className="relative w-full max-w-4xl h-[80vh] min-h-[500px] overflow-hidden rounded-2xl shadow-2xl flex flex-col"
             style={{ background: 'var(--color-surface-elevated)', border: '1px solid var(--color-border)' }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="portfolio-modal-title"
           >
             {/* Header */}
-            <div className="relative p-5 border-b flex items-center justify-between" style={{ borderColor: 'var(--color-border-subtle)' }}>
+            <div className="relative p-5 border-b flex items-center justify-between flex-shrink-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
               <div>
-                <h2 className="text-lg font-bold font-display" style={{ color: 'var(--color-text-primary)' }}>
+                <h2 id="portfolio-modal-title" className="text-lg font-bold font-display" style={{ color: 'var(--color-text-primary)' }}>
                   Enterprise Case Studies
                 </h2>
-                <p className="text-[10px] uppercase tracking-widest font-bold" style={{ color: 'var(--color-text-tertiary)' }}>
+                <p className="text-[11px] uppercase tracking-widest font-bold" style={{ color: 'var(--color-text-tertiary)' }}>
                   Demonstrated ROI & Technical Architecture
                 </p>
               </div>
               <button
                 onClick={() => { onClose(); uiSounds.clickClose(); }}
                 className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+                aria-label="Close case studies"
               >
                 <X className="w-4 h-4" style={{ color: 'var(--color-text-secondary)' }} />
               </button>
@@ -122,7 +135,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
                   className="absolute inset-0 flex flex-col md:flex-row"
                 >
                   {/* Left: Data & Metric */}
-                  <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-r" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                  <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center border-r overflow-y-auto" style={{ borderColor: 'var(--color-border-subtle)' }}>
                     <div className="mb-4 inline-flex items-center justify-center w-10 h-10 rounded-xl" style={{ background: `${activeCase.color}15` }}>
                       <activeCase.icon className="w-5 h-5" style={{ color: activeCase.color }} />
                     </div>
@@ -130,60 +143,116 @@ export default function PortfolioModal({ isOpen, onClose }) {
                     <p className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--color-text-tertiary)' }}>
                       Client: {activeCase.client}
                     </p>
-                    <h3 className="text-2xl md:text-3xl font-display font-extrabold leading-tight mb-4" style={{ color: 'var(--color-text-primary)' }}>
+                    <h3 className="text-2xl md:text-3xl font-display font-extrabold leading-tight mb-3" style={{ color: 'var(--color-text-primary)' }}>
                       {activeCase.title}
                     </h3>
-                    <p className="text-sm leading-relaxed mb-8" style={{ color: 'var(--color-text-secondary)' }}>
+                    <p className="text-[13px] leading-relaxed mb-6" style={{ color: 'var(--color-text-secondary)' }}>
                       {activeCase.description}
                     </p>
                     
-                    <div className="mt-auto pt-6 border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                    <div className="mt-auto pt-4 border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
                       <p className="text-4xl md:text-5xl font-black tabular-nums tracking-tighter" style={{ color: activeCase.color }}>
                         {activeCase.metric}
                       </p>
-                      <p className="text-[10px] font-bold uppercase tracking-wider mt-1" style={{ color: 'var(--color-text-primary)' }}>
+                      <p className="text-[11px] font-bold uppercase tracking-wider mt-1" style={{ color: 'var(--color-text-primary)' }}>
                         {activeCase.metricLabel}
                       </p>
                     </div>
                   </div>
 
-                  {/* Right: Abstract Pictorial Representation */}
-                  <div className="w-full md:w-1/2 bg-steel-950 flex items-center justify-center relative overflow-hidden" style={{ backgroundImage: activeCase.visual }}>
+                  {/* Right: Structured Detail Dashboard */}
+                  <div className="w-full md:w-1/2 bg-steel-950 flex flex-col justify-center relative overflow-hidden p-6 md:p-10">
                     {/* Grid Pattern */}
-                    <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+                    <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
                     
-                    {/* Glowing Data Nodes (Abstract Architecture) */}
-                    <motion.div 
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.2, type: "spring" }}
-                      className="relative z-10 w-48 h-48 rounded-full border border-white/10 flex items-center justify-center backdrop-blur-sm"
-                      style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2))' }}
-                    >
-                      <div className="absolute top-[-10px] left-1/2 w-3 h-3 bg-white rounded-full shadow-[0_0_15px_white]" />
-                      <div className="absolute bottom-4 right-2 w-2 h-2 bg-white rounded-full opacity-50" />
-                      <div className="absolute bottom-12 left-[-5px] w-2.5 h-2.5 bg-white rounded-full opacity-80" />
-                      
-                      <div className="w-24 h-24 rounded-full flex items-center justify-center" style={{ border: `2px solid ${activeCase.color}50` }}>
-                         <div className="w-12 h-12 rounded-full" style={{ background: activeCase.color, boxShadow: `0 0 40px ${activeCase.color}` }} />
+                    <div className="relative z-10 space-y-5">
+                      {/* Tech Stack */}
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Layers className="w-3.5 h-3.5 text-white/40" />
+                          <p className="text-[11px] font-bold uppercase tracking-widest text-white/50">Tech Stack</p>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {activeCase.techStack.map((tech) => (
+                            <span key={tech} className="px-2.5 py-1 rounded-md text-[11px] font-bold text-white/80 bg-white/8 border border-white/10">
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </motion.div>
+
+                      {/* Timeline & Team */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="p-3 rounded-lg bg-white/5 border border-white/8">
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <Clock className="w-3 h-3 text-white/40" />
+                            <p className="text-[11px] font-bold uppercase tracking-widest text-white/40">Timeline</p>
+                          </div>
+                          <p className="text-[16px] font-black text-white/90">{activeCase.timeline}</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/5 border border-white/8">
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <Users className="w-3 h-3 text-white/40" />
+                            <p className="text-[11px] font-bold uppercase tracking-widest text-white/40">Team</p>
+                          </div>
+                          <p className="text-[16px] font-black text-white/90">{activeCase.teamSize}</p>
+                        </div>
+                      </div>
+
+                      {/* Key Results */}
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Workflow className="w-3.5 h-3.5 text-white/40" />
+                          <p className="text-[11px] font-bold uppercase tracking-widest text-white/50">Key Results</p>
+                        </div>
+                        <div className="space-y-2">
+                          {activeCase.highlights.map((h, i) => (
+                            <motion.div 
+                              key={i}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.2 + i * 0.1 }}
+                              className="flex items-start gap-2"
+                            >
+                              <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: activeCase.color }} />
+                              <p className="text-[12px] text-white/70 leading-relaxed">{h}</p>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               </AnimatePresence>
 
               {/* Controls */}
-              <div className="absolute bottom-6 right-6 md:right-[50%] md:translate-x-1/2 flex items-center gap-4 z-20">
-                <button onClick={prevSlide} className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-colors border border-white/20">
-                  <ChevronLeft className="w-5 h-5" />
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 md:left-[25%] flex items-center gap-4 z-20">
+                <button 
+                  onClick={prevSlide} 
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                  style={{ background: 'var(--color-surface-elevated)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
+                  aria-label="Previous case study"
+                >
+                  <ChevronLeft className="w-4 h-4" />
                 </button>
                 <div className="flex gap-2">
                   {CASE_STUDIES.map((_, idx) => (
-                    <div key={idx} className={`w-1.5 h-1.5 rounded-full transition-colors ${idx === currentIndex ? 'bg-white' : 'bg-white/30'}`} />
+                    <button 
+                      key={idx} 
+                      onClick={() => { setCurrentIndex(idx); uiSounds.hover(); }}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === currentIndex ? 'scale-125' : 'opacity-40'}`}
+                      style={{ background: idx === currentIndex ? activeCase.color : 'var(--color-text-tertiary)' }}
+                      aria-label={`Go to case study ${idx + 1}`}
+                    />
                   ))}
                 </div>
-                <button onClick={nextSlide} className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-colors border border-white/20">
-                  <ChevronRight className="w-5 h-5" />
+                <button 
+                  onClick={nextSlide} 
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                  style={{ background: 'var(--color-surface-elevated)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
+                  aria-label="Next case study"
+                >
+                  <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
 

@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Lock, Zap, Globe, FileText, Users, Clock } from 'lucide-react';
+import { Lock, Zap, Globe, FileText, Users, Clock, ExternalLink } from 'lucide-react';
 
-/* Animated counter that ticks up on mount */
+/* Animated counter that ticks up when visible */
 function AnimatedCounter({ target, suffix = '', prefix = '', duration = 2200 }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-10px" });
   const started = useRef(false);
 
   useEffect(() => {
-    if (started.current) return;
+    if (!isInView || started.current) return;
     started.current = true;
 
     const startTime = performance.now();
@@ -20,9 +21,8 @@ function AnimatedCounter({ target, suffix = '', prefix = '', duration = 2200 }) 
       setCount(Math.floor(eased * target));
       if (progress < 1) requestAnimationFrame(animate);
     };
-    // Delay start for visual impact
-    setTimeout(() => requestAnimationFrame(animate), 600);
-  }, [target, duration]);
+    setTimeout(() => requestAnimationFrame(animate), 300);
+  }, [isInView, target, duration]);
 
   return (
     <span ref={ref} className="tabular-nums font-display font-black">
@@ -85,6 +85,30 @@ const STATS = [
 export default function Footer() {
   const footerRef = useRef(null);
   const isInView = useInView(footerRef, { once: true, margin: "-10px" });
+  const [uptime, setUptime] = useState(99);
+  const [isPingSuccess, setIsPingSuccess] = useState(true);
+
+  useEffect(() => {
+    // Real-Time Uptime Check Simulation (pings own origin)
+    const checkUptime = async () => {
+      try {
+        const start = performance.now();
+        await fetch(window.location.href, { method: 'HEAD', cache: 'no-cache' });
+        const latency = performance.now() - start;
+        setIsPingSuccess(true);
+        // Simulate minor fluctuation
+        setUptime(prev => prev >= 99.9 ? 99.9 : prev + 0.1);
+      } catch (e) {
+        setIsPingSuccess(false);
+        setUptime(98);
+      }
+    };
+    const interval = setInterval(checkUptime, 30000);
+    checkUptime();
+    return () => clearInterval(interval);
+  }, []);
+
+  const dynamicStats = STATS.map(s => s.label === 'Uptime' ? { ...s, value: uptime, color: isPingSuccess ? '#0e8d6d' : '#ef4444' } : s);
 
   return (
     <motion.footer
@@ -102,8 +126,8 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           
           {/* Animated Stats */}
-          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-5 lg:gap-6">
-            {STATS.map((stat, i) => (
+          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 lg:gap-5">
+            {dynamicStats.map((stat, i) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 10 }}
@@ -121,7 +145,7 @@ export default function Footer() {
                   <span className="text-[12px] md:text-[13px] font-black tabular-nums transition-colors" style={{ color: stat.color }}>
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} duration={2000 + i * 200} />
                   </span>
-                  <span className="text-[8px] md:text-[9px] font-semibold uppercase tracking-wider mt-0.5" style={{ color: 'var(--color-text-tertiary)' }}>
+                  <span className="text-[11px] font-semibold uppercase tracking-wider mt-0.5" style={{ color: 'var(--color-text-tertiary)' }}>
                     {stat.label}
                   </span>
                 </div>
@@ -134,10 +158,38 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* Copyright */}
-          <p className="text-[8px] md:text-[9px] font-medium tracking-wide uppercase transition-colors whitespace-nowrap" style={{ color: 'var(--color-text-tertiary)' }}>
-            © {new Date().getFullYear()} Baava Tech Pvt Ltd
-          </p>
+          {/* Footer Links + Copyright */}
+          <div className="flex items-center gap-3 md:gap-4">
+            {/* Social Link */}
+            <a 
+              href="https://www.linkedin.com/company/baava-tech/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-7 h-7 rounded-full transition-all duration-300 hover:scale-110"
+              style={{ background: 'var(--color-surface-alt)', border: '1px solid var(--color-border-subtle)' }}
+              aria-label="Baava Tech on LinkedIn"
+            >
+              <ExternalLink className="w-3 h-3" style={{ color: 'var(--color-text-tertiary)' }} />
+            </a>
+
+            {/* Legal links */}
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-medium tracking-wide transition-colors" style={{ color: 'var(--color-text-tertiary)' }}>
+                Privacy
+              </span>
+              <span className="text-[11px]" style={{ color: 'var(--color-border)' }}>·</span>
+              <span className="text-[11px] font-medium tracking-wide transition-colors" style={{ color: 'var(--color-text-tertiary)' }}>
+                Terms
+              </span>
+            </div>
+
+            <span className="text-[11px]" style={{ color: 'var(--color-border)' }}>|</span>
+
+            {/* Copyright */}
+            <p className="text-[11px] font-medium tracking-wide uppercase transition-colors whitespace-nowrap" style={{ color: 'var(--color-text-tertiary)' }}>
+              © {new Date().getFullYear()} Baava Tech Pvt Ltd
+            </p>
+          </div>
         </div>
       </div>
     </motion.footer>

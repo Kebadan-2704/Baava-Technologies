@@ -58,7 +58,7 @@ export default function CustomCursor() {
     ? { width: hoverRect.width + 12, height: hoverRect.height + 12 } 
     : { width: 16, height: 16 };
     
-  const borderRadius = isHovering ? 999 : 999;
+  const borderRadius = 999;
 
   return (
     <motion.div
