@@ -108,25 +108,25 @@ export default function ContactModal({ isOpen, onClose }) {
             aria-labelledby="contact-modal-title"
           >
             {/* Header */}
-            <div className="relative p-6 md:p-8 pb-6 border-b flex-shrink-0 overflow-hidden" style={{ borderColor: 'var(--color-border-subtle)' }}>
+            <div className="relative p-5 md:p-6 pb-4 border-b flex-shrink-0 overflow-hidden" style={{ borderColor: 'var(--color-border-subtle)' }}>
               <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'linear-gradient(var(--color-text-primary) 1px, transparent 1px), linear-gradient(90deg, var(--color-text-primary) 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
               
               <button
                 onClick={() => { onClose(); uiSounds.clickClose(); }}
-                className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors z-20"
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors z-20"
                 aria-label="Close contact form"
               >
                 <X className="w-5 h-5" style={{ color: 'var(--color-text-secondary)' }} />
               </button>
               
-              <div className="relative z-10 flex items-center gap-3 mb-3">
-                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-brand-500/10 border border-brand-500/20">
-                  <div className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
+              <div className="relative z-10 flex items-center gap-3 mb-2">
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-brand-500/10 border border-brand-500/20">
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse" />
                 </div>
-                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-600">Secure Intake Protocol</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-600">Secure Intake Protocol</span>
               </div>
               
-              <h2 id="contact-modal-title" className="relative z-10 text-2xl md:text-3xl font-bold font-display tracking-tight mb-2" style={{ color: 'var(--color-text-primary)' }}>
+              <h2 id="contact-modal-title" className="relative z-10 text-xl md:text-2xl font-bold font-display tracking-tight mb-1" style={{ color: 'var(--color-text-primary)' }}>
                 Initiate Architecture Review
               </h2>
               <p className="relative z-10 text-[13px] md:text-sm max-w-md leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
@@ -161,7 +161,7 @@ export default function ContactModal({ isOpen, onClose }) {
               </div>
             ) : (
               /* Form */
-              <form className="p-6 md:p-8 space-y-5 overflow-y-auto scrollbar-hide flex-1" onSubmit={handleSubmit} noValidate>
+              <form className="p-5 md:p-6 space-y-4 overflow-y-auto scrollbar-hide flex-1" onSubmit={handleSubmit} noValidate>
                 {status === 'error' && (
                   <div className="flex items-center gap-3 p-4 rounded-xl bg-red-50 border border-red-200">
                     <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
@@ -169,7 +169,7 @@ export default function ContactModal({ isOpen, onClose }) {
                   </div>
                 )}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="group space-y-2">
                     <label htmlFor="contact-name" className="text-[10px] font-bold uppercase tracking-widest transition-colors group-focus-within:text-brand-600" style={{ color: 'var(--color-text-tertiary)' }}>Primary Contact *</label>
                     <div className="relative">
@@ -207,7 +207,7 @@ export default function ContactModal({ isOpen, onClose }) {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="group space-y-2">
                     <label htmlFor="contact-email" className="text-[10px] font-bold uppercase tracking-widest transition-colors group-focus-within:text-brand-600" style={{ color: 'var(--color-text-tertiary)' }}>Work Email *</label>
                     <div className="relative">
@@ -282,21 +282,21 @@ export default function ContactModal({ isOpen, onClose }) {
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      rows={4}
+                      rows={2}
                       placeholder="Detail your current bottlenecks, target outcomes, or existing systems..."
-                      className="w-full pl-10 pr-4 py-3 text-[14px] font-medium rounded-xl outline-none transition-all focus:ring-2 focus:ring-offset-1 ring-brand-500/40 focus:ring-brand-500/80 resize-none"
+                      className="w-full pl-10 pr-4 py-2 text-[14px] font-medium rounded-xl outline-none transition-all focus:ring-2 focus:ring-offset-1 ring-brand-500/40 focus:ring-brand-500/80 resize-none"
                       style={{ background: 'var(--color-surface-alt)', border: '1px solid var(--color-border-subtle)', color: 'var(--color-text-primary)' }}
                     />
                   </div>
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-2">
                   <motion.button
                     whileHover={{ scale: 1.01, y: -1 }}
                     whileTap={{ scale: 0.98 }}
                     type="submit"
                     disabled={status === 'submitting'}
-                    className="group relative w-full flex items-center justify-center gap-2 py-4 rounded-xl text-white font-bold text-[14px] transition-all overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="group relative w-full flex items-center justify-center gap-2 py-3 rounded-xl text-white font-bold text-[14px] transition-all overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed"
                     style={{ background: 'var(--color-primary-600)' }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shine-sweep" />
