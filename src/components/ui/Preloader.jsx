@@ -14,7 +14,7 @@ export default function Preloader({ onComplete }) {
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(onComplete, 500); // Wait for exit animation
-    }, 800);
+    }, 2000); // Increased from 800ms to 2000ms to allow animations to play
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -43,7 +43,7 @@ export default function Preloader({ onComplete }) {
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 0.4, scale: 1.5 }}
               transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
-              style={{ background: 'rgba(30, 120, 236, 0.4)' }}
+              style={{ background: 'rgba(236, 72, 153, 0.4)' }} // Pink glow
             />
           </motion.div>
 
@@ -66,7 +66,8 @@ export default function Preloader({ onComplete }) {
             {/* Fast loading bar */}
             <div className="w-64 md:w-96 h-1 md:h-1.5 rounded-full overflow-hidden mt-2" style={{ background: 'var(--color-border)' }}>
               <motion.div 
-                className="h-full bg-gradient-to-r from-blue-500 to-teal-500"
+                className="h-full bg-gradient-to-r"
+                style={{ backgroundImage: 'linear-gradient(to right, var(--color-primary-500), var(--color-accent-500))' }}
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 1.2, ease: "circInOut" }}
