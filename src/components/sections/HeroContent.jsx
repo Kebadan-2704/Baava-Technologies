@@ -158,7 +158,7 @@ export default function HeroContent({
     >
       <div>
         {/* Headline — renders instantly */}
-      <motion.h1 variants={itemVars} className="font-display text-[clamp(1.4rem,3vw+0.5rem,2.4rem)] font-extrabold leading-[1.08] tracking-tight mb-2" style={{ color: 'var(--color-text-primary)' }}>
+      <motion.h1 variants={itemVars} className="font-display text-[clamp(2rem,4vw+1rem,3.5rem)] font-extrabold leading-[1.05] tracking-tight mb-2" style={{ color: 'var(--color-text-primary)' }}>
         Engineering-Grade{' '}
         <span className="relative inline-block whitespace-nowrap">
           <span className="gradient-text inline-block">Operations.</span>
