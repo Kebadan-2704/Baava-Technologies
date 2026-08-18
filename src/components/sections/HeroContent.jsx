@@ -36,18 +36,18 @@ const ServiceIcon = ({ type, size = 16, color }) => {
 };
 
 const SERVICES = [
-  { id: 'erp', iconType: 'erp', label: 'ERP Integration', fullTitle: 'Digital Transformation & ERP Integration', desc: 'Enterprise system modernization, legacy migration, and real-time data synchronization across SAP, Oracle, NetSuite & Dynamics.', color: '#1e78ec', isERP: true,
+  { id: 'erp', iconType: 'erp', label: 'ERP Integration', fullTitle: 'Digital Transformation & ERP Integration', desc: 'Stop spending 40 hours/week manually syncing data. We migrate, integrate, and synchronize your ERP systems across SAP, Oracle, and Dynamics, giving you real-time visibility.', color: '#ec4899', isERP: true,
     erpDetail: {
       platforms: ['SAP S/4HANA', 'Oracle NetSuite', 'Microsoft Dynamics', 'Custom API'],
       capabilities: ['Legacy Data Migration', 'Real-Time Sync', 'Multi-System Integration', 'Process Automation'],
     }
   },
-  { id: 'rpa', iconType: 'rpa', label: 'Automation', fullTitle: 'Automation (RPA & AI)', desc: 'Robotic process automation and AI-driven workflows — reduce manual effort by 80% with intelligent document processing and predictive analytics.', color: '#0e8d6d' },
-  { id: 'data', iconType: 'data', label: 'Data Entry', fullTitle: 'Technical Data Entry', desc: 'High-accuracy technical data input with structured validation protocols, quality checkpoints, and direct database population — 99.9% accuracy.', color: '#515e7b' },
-  { id: 'support', iconType: 'support', label: 'Tech Support', fullTitle: 'Baseline Customer Technical Support', desc: 'L1/L2 support operations with SLA-driven response times, ticketing management, escalation protocols, and compliance reporting.', color: '#8b5cf6' },
-  { id: 'supply', iconType: 'supply', label: 'Supply Chain', fullTitle: 'Supply Chain & Procurement Support', desc: 'Procurement lifecycle optimization — from purchase order processing and vendor management to logistics coordination and inventory tracking.', color: '#f59e0b' },
-  { id: 'docs', iconType: 'docs', label: 'Doc Management', fullTitle: 'Document Management', desc: 'Enterprise document lifecycle — version control, digital archiving, compliance-ready documentation with role-based access permissions.', color: '#1e78ec' },
-  { id: 'bom', iconType: 'bom', label: 'BOM Lifecycle', fullTitle: 'BOM Lifecycle Management', desc: 'Bill of Materials tracking from design to production — revision control, engineering change orders (ECOs), and multi-level BOM structures.', color: '#84cc16' },
+  { id: 'rpa', iconType: 'rpa', label: 'Automation', fullTitle: 'Automation (RPA & AI)', desc: 'Manual workflows kill productivity. Our RPA and AI-driven workflows reduce manual effort by 80%, using intelligent document processing to turn unstructured data into actionable insights.', color: '#0e8d6d' },
+  { id: 'data', iconType: 'data', label: 'Data Entry', fullTitle: 'Technical Data Entry', desc: 'Errors in technical data cost millions. We provide high-accuracy input with structured validation protocols and direct database population, guaranteeing 99.9% accuracy.', color: '#515e7b' },
+  { id: 'support', iconType: 'support', label: 'Tech Support', fullTitle: 'Baseline Customer Technical Support', desc: 'Slow response times churn customers. Our L1/L2 support operations feature SLA-driven responses, strict escalation protocols, and compliance reporting to keep your customers happy.', color: '#8b5cf6' },
+  { id: 'supply', iconType: 'supply', label: 'Supply Chain', fullTitle: 'Supply Chain & Procurement Support', desc: 'Procurement bottlenecks delay projects. We optimize your entire lifecycle—from PO processing and vendor management to logistics coordination, ensuring on-time delivery.', color: '#f59e0b' },
+  { id: 'docs', iconType: 'docs', label: 'Doc Management', fullTitle: 'Document Management', desc: 'Lost documents lead to compliance failures. We implement enterprise document lifecycles with version control, digital archiving, and role-based access to keep you audit-ready.', color: '#ec4899' },
+  { id: 'bom', iconType: 'bom', label: 'BOM Lifecycle', fullTitle: 'BOM Lifecycle Management', desc: 'BOM discrepancies cause manufacturing delays. We track your Bill of Materials from design to production, managing revision controls and multi-level structures seamlessly.', color: '#84cc16' },
 ];
 
 const INDUSTRIES = [
@@ -78,7 +78,7 @@ function ShimmerCTA({ onClick, children }) {
       onMouseMove={handleMouseMove}
       whileHover={{ scale: 1.03, y: -1 }}
       whileTap={{ scale: 0.98 }}
-      className="group relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-steel-950 via-steel-900 to-steel-950 text-white text-[11px] md:text-[13px] font-bold rounded-full shadow-[0_0_30px_rgba(30,120,236,0.2)] hover:shadow-[0_0_40px_rgba(30,120,236,0.4)] transition-all duration-500 overflow-hidden cursor-pointer"
+      className="group relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-steel-950 via-steel-900 to-steel-950 text-white text-[11px] md:text-[13px] font-bold rounded-full shadow-[0_0_30px_rgba(236,72,153,0.2)] hover:shadow-[0_0_40px_rgba(236,72,153,0.4)] transition-all duration-500 overflow-hidden cursor-pointer"
     >
       <motion.div
         className="pointer-events-none absolute -inset-px rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -158,7 +158,7 @@ export default function HeroContent({
     >
       <div>
         {/* Headline — renders instantly */}
-      <motion.h1 variants={itemVars} className="font-display text-[clamp(1.6rem,3.5vw+0.5rem,2.8rem)] font-extrabold leading-[1.08] tracking-tight mb-3" style={{ color: 'var(--color-text-primary)' }}>
+      <motion.h1 variants={itemVars} className="font-display text-[clamp(1.4rem,3vw+0.5rem,2.4rem)] font-extrabold leading-[1.08] tracking-tight mb-2" style={{ color: 'var(--color-text-primary)' }}>
         Engineering-Grade{' '}
         <span className="relative inline-block whitespace-nowrap">
           <span className="gradient-text inline-block">Operations.</span>
@@ -166,13 +166,15 @@ export default function HeroContent({
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.8 }}
             transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
-            className="absolute -bottom-0.5 left-0 w-full" viewBox="0 0 200 8" fill="none"
+            className="absolute -bottom-1 left-0 w-full" viewBox="0 0 200 12" fill="none"
           >
-            <path d="M2 6C50 2 150 2 198 6" stroke="url(#heroUnderline)" strokeWidth="3" strokeLinecap="round" />
+            {/* Elegant, signature-like sweeping underline */}
+            <path d="M2 8 Q 50 2 100 6 T 198 4" stroke="url(#heroUnderline)" strokeWidth="2.5" strokeLinecap="round" />
             <defs>
               <linearGradient id="heroUnderline" x1="0" y1="0" x2="200" y2="0">
-                <stop offset="0%" stopColor="#1e78ec" />
-                <stop offset="100%" stopColor="#0e8d6d" />
+                <stop offset="0%" stopColor="var(--color-primary-500)" />
+                <stop offset="50%" stopColor="var(--color-primary-400)" />
+                <stop offset="100%" stopColor="var(--color-accent-500)" />
               </linearGradient>
             </defs>
           </motion.svg>
@@ -181,7 +183,7 @@ export default function HeroContent({
       </motion.h1>
 
       {/* Detail panel - Fixed height container to prevent layout shifts */}
-      <div className="min-h-[180px] md:min-h-[160px] flex items-center justify-center lg:justify-start w-full relative my-2">
+      <div className="min-h-[110px] md:min-h-[90px] flex items-start justify-center lg:justify-start w-full relative my-1">
         <AnimatePresence mode="wait">
           {active && active.isERP ? (
             <motion.div
@@ -193,27 +195,27 @@ export default function HeroContent({
               className="w-full rounded-xl overflow-hidden glass-panel relative"
             >
               <div className="absolute inset-0 z-0 pointer-events-none" style={{ background: `linear-gradient(135deg, ${active.color}10, transparent)` }} />
-              <div className="p-3 relative z-10 text-left">
-                <div className="flex items-start justify-between mb-2">
+              <div className="p-2.5 relative z-10 text-left">
+                <div className="flex items-start justify-between mb-1.5">
                   <div className="flex items-center gap-2">
                     <ServiceIcon type={active.iconType} size={16} color={active.color} />
-                    <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: active.color }}>{active.fullTitle}</p>
+                    <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-wider" style={{ color: active.color }}>{active.fullTitle}</p>
                   </div>
                   <button 
                     onClick={() => { setActiveService(null); uiSounds.clickClose(); }} 
-                    className="w-5 h-5 rounded-full flex items-center justify-center hover:bg-black/5 transition-colors flex-shrink-0" 
+                    className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-black/5 transition-colors flex-shrink-0" 
                     aria-label="Close service detail"
                   >
-                    <X className="w-3 h-3" style={{ color: 'var(--color-text-tertiary)' }} />
+                    <X className="w-4 h-4" style={{ color: 'var(--color-text-tertiary)' }} />
                   </button>
                 </div>
-                <p className="text-[12px] leading-relaxed mb-2.5" style={{ color: 'var(--color-text-secondary)' }}>{active.desc}</p>
+                <p className="text-[12px] md:text-[13px] leading-relaxed mb-2 font-medium" style={{ color: 'var(--color-text-secondary)' }}>{active.desc}</p>
                 <div className="flex flex-col gap-2">
                   <div className="flex flex-wrap gap-1.5">
                     {active.erpDetail.platforms.map((p, i) => (
                       <span
                         key={p}
-                        className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold"
+                        className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] md:text-[11px] font-bold"
                         style={{ background: 'var(--color-surface-elevated)', border: `1px solid ${active.color}20`, color: 'var(--color-text-primary)' }}
                       >
                         {p}
@@ -230,21 +232,21 @@ export default function HeroContent({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="w-full p-3 rounded-xl relative glass-panel overflow-hidden text-left"
+              className="w-full p-2.5 rounded-xl relative glass-panel overflow-hidden text-left"
             >
               <div className="absolute inset-0 z-0 pointer-events-none" style={{ background: `linear-gradient(135deg, ${active.color}10, transparent)` }} />
               <button 
                 onClick={() => { setActiveService(null); uiSounds.clickClose(); }} 
-                className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center hover:bg-black/5 transition-colors" 
+                className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center hover:bg-black/5 transition-colors" 
                 aria-label="Close service detail"
               >
-                <X className="w-3 h-3" style={{ color: 'var(--color-text-tertiary)' }} />
+                <X className="w-4 h-4" style={{ color: 'var(--color-text-tertiary)' }} />
               </button>
-              <div className="flex items-center gap-2 mb-2">
-                <ServiceIcon type={active.iconType} size={16} color={active.color} />
-                <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: active.color }}>{active.fullTitle}</p>
+              <div className="flex items-center gap-2 mb-1.5">
+                <ServiceIcon type={active.iconType} size={18} color={active.color} />
+                <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-wider" style={{ color: active.color }}>{active.fullTitle}</p>
               </div>
-              <p className="text-[12px] leading-relaxed pr-4" style={{ color: 'var(--color-text-secondary)' }}>{active.desc}</p>
+              <p className="text-[12px] md:text-[13px] leading-relaxed pr-6 font-medium" style={{ color: 'var(--color-text-secondary)' }}>{active.desc}</p>
             </motion.div>
           ) : (
             <motion.p
@@ -253,7 +255,7 @@ export default function HeroContent({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="text-[13px] md:text-sm leading-relaxed max-w-md mx-auto lg:mx-0 absolute inset-0 flex items-center justify-center lg:justify-start"
+              className="text-[12px] md:text-[13px] leading-relaxed max-w-md mx-auto lg:mx-0 absolute inset-0 flex items-start justify-center lg:justify-start pt-2"
               style={{ color: 'var(--color-text-secondary)' }}
             >
               From digital transformation to BOM lifecycle management — we become the operational backbone your engineering teams need.
@@ -262,10 +264,9 @@ export default function HeroContent({
         </AnimatePresence>
       </div>
       </div>
-      
-      <motion.div variants={itemVars} className="mb-3 flex justify-center lg:justify-start w-full mt-2 lg:mt-0 relative z-20">
+      <motion.div variants={itemVars} className="mb-4 -mt-4 lg:-mt-6 flex flex-col lg:flex-row items-center justify-center lg:justify-start w-full relative z-20 gap-4">
         <ShimmerCTA onClick={() => setIsContactOpen(true)}>
-          Explore Operations Hub
+          Book a Strategy Call
         </ShimmerCTA>
       </motion.div>
 
@@ -282,7 +283,7 @@ export default function HeroContent({
                 transition={{ delay: 0.6 + i * 0.05, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => handleServiceClick(svc.id)}
                 onMouseEnter={() => uiSounds.hover()}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg transition-all duration-300 cursor-pointer text-left group flex-shrink-0"
+                className="flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-all duration-300 cursor-pointer text-left group flex-shrink-0 min-h-[36px]"
                 style={{
                   background: activeService === svc.id ? `${svc.color}15` : 'var(--color-surface-elevated)',
                   border: `1px solid ${activeService === svc.id ? `${svc.color}40` : 'var(--color-border-subtle)'}`,
@@ -295,10 +296,10 @@ export default function HeroContent({
                 aria-label={`${svc.label} service`}
               >
                 <span className="transition-transform duration-300 group-hover:scale-110">
-                  <ServiceIcon type={svc.iconType} size={14} color={activeService === svc.id ? svc.color : 'var(--color-text-secondary)'} />
+                  <ServiceIcon type={svc.iconType} size={18} color={activeService === svc.id ? svc.color : 'var(--color-text-secondary)'} />
                 </span>
                 <span
-                  className="text-[11px] font-bold uppercase tracking-wider transition-colors whitespace-nowrap"
+                  className="text-[12px] md:text-[13px] font-bold uppercase tracking-wider transition-colors whitespace-nowrap"
                   style={{ color: activeService === svc.id ? svc.color : 'var(--color-text-secondary)' }}
                 >
                   {svc.label}
@@ -310,12 +311,13 @@ export default function HeroContent({
 
         {/* Industries We Serve */}
         <motion.div variants={itemVars} className="flex items-center gap-4 mb-0 overflow-hidden border-t pt-3 mt-1" style={{ borderColor: 'var(--color-border-subtle)' }}>
-          <span className="text-[11px] font-bold uppercase tracking-widest flex-shrink-0" style={{ color: 'var(--color-text-tertiary)' }}>Industries</span>
-          <div className="flex items-center gap-4 flex-wrap">
+          <span className="text-[12px] font-bold uppercase tracking-widest flex-shrink-0" style={{ color: 'var(--color-text-tertiary)' }}>Industries</span>
+          <div className="flex items-center gap-4 flex-nowrap overflow-x-auto scrollbar-hide mask-edges" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; }`}</style>
             {INDUSTRIES.map((ind) => (
-              <div key={ind.label} className="flex items-center gap-1.5 opacity-50 hover:opacity-80 transition-opacity">
-                <ind.icon className="w-3 h-3" style={{ color: 'var(--color-text-secondary)' }} />
-                <span className="text-[11px] font-bold tracking-tight" style={{ color: 'var(--color-text-primary)' }}>{ind.label}</span>
+              <div key={ind.label} className="flex items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity flex-shrink-0">
+                <ind.icon className="w-4 h-4" style={{ color: 'var(--color-text-secondary)' }} />
+                <span className="text-[12px] font-bold tracking-tight" style={{ color: 'var(--color-text-primary)' }}>{ind.label}</span>
               </div>
             ))}
           </div>
@@ -324,9 +326,6 @@ export default function HeroContent({
 
       {/* Removed CTA from here, moved to header as per plan to save space */}
 
-      {/* Modals */}
-      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
-      <PortfolioModal isOpen={isPortfolioOpen} onClose={() => setIsPortfolioOpen(false)} />
     </motion.div>
   );
 }

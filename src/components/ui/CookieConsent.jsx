@@ -74,7 +74,11 @@ export default function CookieConsent() {
                 Accept All
               </motion.button>
               <button
-                onClick={() => setIsVisible(false)}
+                onClick={() => {
+                  localStorage.setItem('baava_cookie_consent', 'declined');
+                  setIsVisible(false);
+                  uiSounds.clickClose();
+                }}
                 className="flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-colors"
                 style={{ background: 'var(--color-surface-alt)', color: 'var(--color-text-secondary)' }}
               >

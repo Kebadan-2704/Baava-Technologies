@@ -14,7 +14,7 @@ export default function Preloader({ onComplete }) {
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(onComplete, 500); // Wait for exit animation
-    }, 1800);
+    }, 800);
     return () => clearTimeout(timer);
   }, [onComplete]);
 

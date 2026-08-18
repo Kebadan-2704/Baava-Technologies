@@ -16,7 +16,7 @@ const CASE_STUDIES = [
     techStack: ['SAP S/4HANA', 'ABAP', 'REST APIs', 'PostgreSQL'],
     timeline: '6 months',
     teamSize: '12 engineers',
-    highlights: ['2.4M records migrated with zero data loss', 'Sub-second real-time synchronization', '3 legacy systems decommissioned'],
+    highlights: ['2.4M records migrated with zero data loss', 'Sub-second real-time synchronization', '$2.5M in annual IT savings'],
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const CASE_STUDIES = [
     techStack: ['Oracle PLM', 'Python', 'Kafka', 'MongoDB'],
     timeline: '8 months',
     teamSize: '8 engineers',
-    highlights: ['Zero defects across 15,000+ components', 'Automated ECO change tracking', 'MIL-STD compliance verified'],
+    highlights: ['Zero defects across 15,000+ components', '$1.2M saved in manufacturing rework', 'MIL-STD compliance verified'],
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ const CASE_STUDIES = [
     techStack: ['UiPath', 'Power Automate', 'Azure OCR', 'SQL Server'],
     timeline: '4 months',
     teamSize: '6 engineers',
-    highlights: ['50,000+ monthly invoices automated', '99.7% data extraction accuracy', 'ROI achieved within 3 months'],
+    highlights: ['50,000+ monthly invoices automated', '99.7% data extraction accuracy', 'Achieved ROI in under 3 months'],
   }
 ];
 

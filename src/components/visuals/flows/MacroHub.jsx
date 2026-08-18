@@ -3,12 +3,12 @@ import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 
 const TICKER_MESSAGES = [
   { text: 'Processing BOM revision v3.2...', color: '#84cc16' },
-  { text: 'ERP data sync — 2,847 records updated', color: '#1e78ec' },
+  { text: 'ERP data sync — 2,847 records updated', color: '#ec4899' },
   { text: 'RPA workflow completed — 12 invoices processed', color: '#0e8d6d' },
   { text: 'Technical data validated — 99.97% accuracy', color: '#515e7b' },
   { text: 'Support ticket #4891 resolved — SLA met', color: '#8b5cf6' },
   { text: 'Supply chain PO #7823 — vendor confirmed', color: '#f59e0b' },
-  { text: 'Document v4.1 archived — compliance verified', color: '#1e78ec' },
+  { text: 'Document v4.1 archived — compliance verified', color: '#ec4899' },
 ];
 
 const MacroHub = memo(({ activeService }) => {
@@ -17,12 +17,12 @@ const MacroHub = memo(({ activeService }) => {
   const [tickerIndex, setTickerIndex] = useState(0);
 
   const SERVICES = [
-    { id: 'erp', label: 'ERP Integration', icon: '⚙️', color: '#1e78ec' },
+    { id: 'erp', label: 'ERP Integration', icon: '⚙️', color: '#ec4899' },
     { id: 'rpa', label: 'Automation', icon: '🤖', color: '#0e8d6d' },
     { id: 'data', label: 'Data Entry', icon: '📋', color: '#515e7b' },
     { id: 'support', label: 'Tech Support', icon: '🎧', color: '#8b5cf6' },
     { id: 'supply', label: 'Supply Chain', icon: '🔗', color: '#f59e0b' },
-    { id: 'docs', label: 'Doc Mgmt', icon: '📁', color: '#1e78ec' },
+    { id: 'docs', label: 'Doc Mgmt', icon: '📁', color: '#ec4899' },
     { id: 'bom', label: 'BOM Lifecycle', icon: '🔧', color: '#84cc16' },
   ];
 
@@ -88,7 +88,7 @@ const MacroHub = memo(({ activeService }) => {
         <div className="w-[80%] h-[80%] bg-gradient-to-br from-brand-200/8 via-transparent to-steel-200/6 rounded-full blur-[60px]" />
       </div>
       {/* Pulsing corner glow */}
-      <div className="absolute top-[10%] right-[5%] w-16 h-16 rounded-full blur-2xl pointer-events-none animate-gentle-pulse" style={{ background: 'rgba(30, 120, 236, 0.12)' }} />
+      <div className="absolute top-[10%] right-[5%] w-16 h-16 rounded-full blur-2xl pointer-events-none animate-gentle-pulse" style={{ background: 'rgba(236, 72, 153, 0.12)' }} />
       <div className="absolute bottom-[15%] left-[8%] w-12 h-12 rounded-full blur-xl pointer-events-none animate-gentle-pulse" style={{ background: 'rgba(14, 141, 109, 0.1)', animationDelay: '1.5s' }} />
 
       <motion.div 
@@ -99,12 +99,12 @@ const MacroHub = memo(({ activeService }) => {
           <defs>
             <linearGradient id="flowGrad" x1="0" y1="0.5" x2="1" y2="0.5">
               <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.6" />
-              <stop offset="40%" stopColor="#1e78ec" stopOpacity="0.8" />
+              <stop offset="40%" stopColor="#ec4899" stopOpacity="0.8" />
               <stop offset="100%" stopColor="#0e8d6d" stopOpacity="0.6" />
             </linearGradient>
             <linearGradient id="blueGlow" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#1e78ec" stopOpacity="0.1" />
-              <stop offset="100%" stopColor="#1e78ec" stopOpacity="0.01" />
+              <stop offset="0%" stopColor="#ec4899" stopOpacity="0.1" />
+              <stop offset="100%" stopColor="#ec4899" stopOpacity="0.01" />
             </linearGradient>
             <linearGradient id="greenGlow" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#0e8d6d" stopOpacity="0.08" />
@@ -112,14 +112,14 @@ const MacroHub = memo(({ activeService }) => {
             </linearGradient>
             {/* Animated gradient for hub border */}
             <linearGradient id="hubBorderGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#1e78ec" stopOpacity="0.5">
-                <animate attributeName="stop-color" values="#1e78ec;#0e8d6d;#f59e0b;#1e78ec" dur="4s" repeatCount="indefinite" />
+              <stop offset="0%" stopColor="#ec4899" stopOpacity="0.5">
+                <animate attributeName="stop-color" values="#ec4899;#0e8d6d;#f59e0b;#ec4899" dur="4s" repeatCount="indefinite" />
               </stop>
               <stop offset="50%" stopColor="#0e8d6d" stopOpacity="0.3">
-                <animate attributeName="stop-color" values="#0e8d6d;#f59e0b;#1e78ec;#0e8d6d" dur="4s" repeatCount="indefinite" />
+                <animate attributeName="stop-color" values="#0e8d6d;#f59e0b;#ec4899;#0e8d6d" dur="4s" repeatCount="indefinite" />
               </stop>
               <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.5">
-                <animate attributeName="stop-color" values="#f59e0b;#1e78ec;#0e8d6d;#f59e0b" dur="4s" repeatCount="indefinite" />
+                <animate attributeName="stop-color" values="#f59e0b;#ec4899;#0e8d6d;#f59e0b" dur="4s" repeatCount="indefinite" />
               </stop>
             </linearGradient>
             <filter id="softGlow">
@@ -232,7 +232,7 @@ const MacroHub = memo(({ activeService }) => {
             {/* Progress bar */}
             <rect x="24" y="310" width="280" height="5" rx="2.5" fill="#eae7e2" />
             <rect x="24" y="310" width={`${(progress / 100) * 280}`} height="5" rx="2.5" 
-              fill={allArrived ? '#0e8d6d' : '#1e78ec'}
+              fill={allArrived ? '#0e8d6d' : '#ec4899'}
               style={{ transition: 'width 0.5s ease, fill 0.4s ease' }}
             />
             
@@ -245,7 +245,7 @@ const MacroHub = memo(({ activeService }) => {
 
             {/* Shield badge */}
             <g transform="translate(306, -10)">
-              <circle r="14" fill={allArrived ? '#0e8d6d' : '#1e78ec'} style={{ transition: 'fill 0.4s ease' }} />
+              <circle r="14" fill={allArrived ? '#0e8d6d' : '#ec4899'} style={{ transition: 'fill 0.4s ease' }} />
               <circle r="14" fill="none" stroke="white" strokeWidth="2.5" />
               <text x="0" y="5" textAnchor="middle" fontSize="16" fill="white">🛡️</text>
               {allArrived && (

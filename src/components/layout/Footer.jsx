@@ -142,10 +142,10 @@ export default function Footer() {
                   <stat.icon className="w-3.5 h-3.5" style={{ color: stat.color }} />
                 </div>
                 <div className="flex flex-col leading-none">
-                  <span className="text-[12px] md:text-[13px] font-black tabular-nums transition-colors" style={{ color: stat.color }}>
+                  <span className="text-[14px] md:text-[15px] font-black tabular-nums transition-colors" style={{ color: stat.color }}>
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} duration={2000 + i * 200} />
                   </span>
-                  <span className="text-[11px] font-semibold uppercase tracking-wider mt-0.5" style={{ color: 'var(--color-text-tertiary)' }}>
+                  <span className="text-[12px] font-semibold uppercase tracking-wider mt-0.5" style={{ color: 'var(--color-text-tertiary)' }}>
                     {stat.label}
                   </span>
                 </div>
@@ -159,34 +159,42 @@ export default function Footer() {
           </div>
 
           {/* Footer Links + Copyright */}
-          <div className="flex items-center gap-3 md:gap-4">
-            {/* Social Link */}
-            <a 
-              href="https://www.linkedin.com/company/baava-tech/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center justify-center w-7 h-7 rounded-full transition-all duration-300 hover:scale-110"
-              style={{ background: 'var(--color-surface-alt)', border: '1px solid var(--color-border-subtle)' }}
-              aria-label="Baava Tech on LinkedIn"
-            >
-              <ExternalLink className="w-3 h-3" style={{ color: 'var(--color-text-tertiary)' }} />
+          <div className="flex flex-wrap items-center justify-center lg:justify-end gap-3 md:gap-4 mt-4 md:mt-0">
+            {/* Phone Number */}
+            <a href="tel:+919876543210" className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-colors hover:bg-black/5">
+              <span className="text-[12px] font-bold" style={{ color: 'var(--color-text-secondary)' }}>+91 98765 43210</span>
             </a>
 
-            {/* Legal links */}
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-medium tracking-wide transition-colors" style={{ color: 'var(--color-text-tertiary)' }}>
-                Privacy
-              </span>
-              <span className="text-[11px]" style={{ color: 'var(--color-border)' }}>·</span>
-              <span className="text-[11px] font-medium tracking-wide transition-colors" style={{ color: 'var(--color-text-tertiary)' }}>
-                Terms
-              </span>
+            <span className="text-[12px]" style={{ color: 'var(--color-border)' }}>|</span>
+
+            {/* Founder Links */}
+            <div className="flex items-center gap-3">
+              <a href="https://linkedin.com/in/veerankandasamy" target="_blank" rel="noopener noreferrer" className="text-[12px] font-medium hover:text-primary-600 transition-colors flex items-center gap-1" style={{ color: 'var(--color-text-tertiary)' }}>
+                Veeran Kandasamy <ExternalLink className="w-3 h-3" />
+              </a>
+              <span className="text-[12px]" style={{ color: 'var(--color-border)' }}>·</span>
+              <a href="https://linkedin.com/in/rohinirangasamy" target="_blank" rel="noopener noreferrer" className="text-[12px] font-medium hover:text-primary-600 transition-colors flex items-center gap-1" style={{ color: 'var(--color-text-tertiary)' }}>
+                Rohini Rangasamy <ExternalLink className="w-3 h-3" />
+              </a>
             </div>
 
-            <span className="text-[11px]" style={{ color: 'var(--color-border)' }}>|</span>
+            <span className="hidden md:inline text-[12px]" style={{ color: 'var(--color-border)' }}>|</span>
+
+            {/* Legal links */}
+            <div className="flex items-center gap-3">
+              <a href="#" onClick={(e) => e.preventDefault()} className="text-[12px] font-medium tracking-wide transition-colors hover:text-primary-600" style={{ color: 'var(--color-text-tertiary)' }}>
+                Privacy Policy
+              </a>
+              <span className="text-[12px]" style={{ color: 'var(--color-border)' }}>·</span>
+              <a href="#" onClick={(e) => e.preventDefault()} className="text-[12px] font-medium tracking-wide transition-colors hover:text-primary-600" style={{ color: 'var(--color-text-tertiary)' }}>
+                Terms of Service
+              </a>
+            </div>
+
+            <span className="hidden lg:inline text-[12px]" style={{ color: 'var(--color-border)' }}>|</span>
 
             {/* Copyright */}
-            <p className="text-[11px] font-medium tracking-wide uppercase transition-colors whitespace-nowrap" style={{ color: 'var(--color-text-tertiary)' }}>
+            <p className="text-[12px] font-medium tracking-wide uppercase transition-colors whitespace-nowrap" style={{ color: 'var(--color-text-tertiary)' }}>
               © {new Date().getFullYear()} Baava Tech Pvt Ltd
             </p>
           </div>

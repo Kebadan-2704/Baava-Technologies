@@ -6,7 +6,7 @@ import { uiSounds } from '../../utils/sounds';
 export default function LiveChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { id: 1, type: 'bot', text: 'Hello! I am the Baava Tech Operations AI. How can I help you optimize your engineering workflows today?' }
+    { id: 1, type: 'bot', text: 'Hello! I am the Baava Tech Operations AI. How can I help you optimize your workflows today?' }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -36,8 +36,11 @@ export default function LiveChatWidget() {
     setIsTyping(true);
     
     try {
-      const prompt = encodeURIComponent(userMsg);
-      const response = await fetch(`https://chatbot.codexapi.workers.dev/?prompt=${prompt}&model=gpt-5.1`);
+      const response = await fetch('https://chatbot.codexapi.workers.dev/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: userMsg, model: 'gpt-5.1' })
+      });
       const data = await response.json();
       
       if (data && data.answer) {
