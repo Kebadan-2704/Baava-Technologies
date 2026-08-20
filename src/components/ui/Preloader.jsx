@@ -35,7 +35,7 @@ export default function Preloader({ onComplete }) {
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <img src="/logo-transparent.png" alt="Baava Tech" className="h-32 md:h-48 object-contain relative z-10" />
+            <img src="/logo-transparent.webp" alt="Baava Tech" width="250" height="56" fetchPriority="high" className="h-32 md:h-48 w-auto object-contain relative z-10" />
             
             {/* Background Glow */}
             <motion.div 

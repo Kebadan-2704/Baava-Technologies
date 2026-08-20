@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Building, User, Mail, MessageSquare, Phone, CheckCircle2, AlertCircle, Briefcase } from 'lucide-react';
 import { uiSounds } from '../../utils/sounds';
 
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xpwzgkdl'; // Replace with your Formspree form ID
+const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ID || 'https://formspree.io/f/xpwzgkdl';
 
 export default function ContactModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
@@ -16,6 +16,49 @@ export default function ContactModal({ isOpen, onClose }) {
   });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
+
+  const modalRef = React.useRef(null);
+
+  // Focus Trapping
+  useEffect(() => {
+    const handleTab = (e) => {
+      if (!isOpen || !modalRef.current || e.key !== 'Tab') return;
+      
+      const focusableElements = modalRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      
+      if (focusableElements.length === 0) return;
+      
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          lastElement.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          firstElement.focus();
+          e.preventDefault();
+        }
+      }
+    };
+    
+    // Auto-focus first element when opened
+    if (isOpen) {
+      setTimeout(() => {
+        const focusableElements = modalRef.current?.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusableElements && focusableElements.length > 0) {
+          focusableElements[0].focus();
+        }
+      }, 100);
+    }
+    
+    window.addEventListener('keydown', handleTab);
+    return () => window.removeEventListener('keydown', handleTab);
+  }, [isOpen]);
 
   // Close on Escape
   useEffect(() => {
@@ -51,7 +94,7 @@ export default function ContactModal({ isOpen, onClose }) {
     if (!formData.name.trim()) newErrors.name = 'Required';
     if (!formData.company.trim()) newErrors.company = 'Required';
     if (!formData.email.trim()) newErrors.email = 'Required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email';
+    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) newErrors.email = 'Invalid email';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -97,6 +140,7 @@ export default function ContactModal({ isOpen, onClose }) {
 
           {/* Modal Container */}
           <motion.div
+            ref={modalRef}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -162,6 +206,7 @@ export default function ContactModal({ isOpen, onClose }) {
             ) : (
               /* Form */
               <form className="p-5 md:p-6 space-y-4 overflow-y-auto scrollbar-hide flex-1" onSubmit={handleSubmit} noValidate>
+                <input type="text" name="_gotcha" style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
                 {status === 'error' && (
                   <div className="flex items-center gap-3 p-4 rounded-xl bg-red-50 border border-red-200">
                     <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
@@ -183,6 +228,7 @@ export default function ContactModal({ isOpen, onClose }) {
                         placeholder="e.g. Sarah Connor" 
                         className={`w-full pl-10 pr-4 py-2.5 text-[14px] font-medium rounded-xl outline-none transition-all focus:ring-2 focus:ring-offset-1 ${errors.name ? 'ring-2 ring-red-400' : 'ring-brand-500/40 focus:ring-brand-500/80'}`}
                         style={{ background: 'var(--color-surface-alt)', border: `1px solid ${errors.name ? '#f87171' : 'var(--color-border-subtle)'}`, color: 'var(--color-text-primary)' }} 
+                        maxLength={100}
                         required
                       />
                     </div>
@@ -201,6 +247,7 @@ export default function ContactModal({ isOpen, onClose }) {
                         placeholder="e.g. Cyberdyne Systems" 
                         className={`w-full pl-10 pr-4 py-2.5 text-[14px] font-medium rounded-xl outline-none transition-all focus:ring-2 focus:ring-offset-1 ${errors.company ? 'ring-2 ring-red-400' : 'ring-brand-500/40 focus:ring-brand-500/80'}`}
                         style={{ background: 'var(--color-surface-alt)', border: `1px solid ${errors.company ? '#f87171' : 'var(--color-border-subtle)'}`, color: 'var(--color-text-primary)' }} 
+                        maxLength={100}
                         required
                       />
                     </div>
@@ -221,6 +268,7 @@ export default function ContactModal({ isOpen, onClose }) {
                         placeholder="sarah@cyberdyne.com" 
                         className={`w-full pl-10 pr-4 py-2.5 text-[14px] font-medium rounded-xl outline-none transition-all focus:ring-2 focus:ring-offset-1 ${errors.email ? 'ring-2 ring-red-400' : 'ring-brand-500/40 focus:ring-brand-500/80'}`}
                         style={{ background: 'var(--color-surface-alt)', border: `1px solid ${errors.email ? '#f87171' : 'var(--color-border-subtle)'}`, color: 'var(--color-text-primary)' }} 
+                        maxLength={150}
                         required
                       />
                     </div>
@@ -239,6 +287,7 @@ export default function ContactModal({ isOpen, onClose }) {
                         placeholder="+1 (555) 000-0000" 
                         className="w-full pl-10 pr-4 py-2.5 text-[14px] font-medium rounded-xl outline-none transition-all focus:ring-2 focus:ring-offset-1 ring-brand-500/40 focus:ring-brand-500/80"
                         style={{ background: 'var(--color-surface-alt)', border: '1px solid var(--color-border-subtle)', color: 'var(--color-text-primary)' }} 
+                        maxLength={20}
                       />
                     </div>
                   </div>
@@ -286,6 +335,7 @@ export default function ContactModal({ isOpen, onClose }) {
                       placeholder="Detail your current bottlenecks, target outcomes, or existing systems..."
                       className="w-full pl-10 pr-4 py-2 text-[14px] font-medium rounded-xl outline-none transition-all focus:ring-2 focus:ring-offset-1 ring-brand-500/40 focus:ring-brand-500/80 resize-none"
                       style={{ background: 'var(--color-surface-alt)', border: '1px solid var(--color-border-subtle)', color: 'var(--color-text-primary)' }}
+                      maxLength={1000}
                     />
                   </div>
                 </div>

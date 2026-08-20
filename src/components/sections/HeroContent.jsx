@@ -264,7 +264,7 @@ export default function HeroContent({
         </AnimatePresence>
       </div>
       </div>
-      <motion.div variants={itemVars} className="mb-4 -mt-4 lg:-mt-6 flex flex-col lg:flex-row items-center justify-center lg:justify-start w-full relative z-20 gap-4">
+      <motion.div variants={itemVars} className={`mb-4 flex flex-col lg:flex-row items-center justify-center lg:justify-start w-full relative z-20 gap-4 ${active ? 'mt-2' : '-mt-2 lg:-mt-4'}`}>
         <ShimmerCTA onClick={() => setIsContactOpen(true)}>
           Book a Strategy Call
         </ShimmerCTA>

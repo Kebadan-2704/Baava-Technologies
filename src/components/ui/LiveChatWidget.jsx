@@ -35,24 +35,29 @@ export default function LiveChatWidget() {
     setMessages(prev => [...prev, { id: Date.now(), type: 'user', text: userMsg }]);
     setIsTyping(true);
     
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
     try {
       const response = await fetch('https://chatbot.codexapi.workers.dev/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: userMsg, model: 'gpt-5.1' })
+        body: JSON.stringify({ prompt: userMsg, model: 'gpt-5.1' }),
+        signal: controller.signal
       });
+      clearTimeout(timeoutId);
       const data = await response.json();
       
       if (data && data.answer) {
         setMessages(prev => [...prev, { id: Date.now(), type: 'bot', text: data.answer }]);
-        uiSounds.success();
+        if (typeof uiSounds.success === 'function') uiSounds.success();
       } else {
         throw new Error('Invalid response');
       }
     } catch (err) {
-      console.error("Chat error:", err);
+      clearTimeout(timeoutId);
       setMessages(prev => [...prev, { id: Date.now(), type: 'bot', text: "I'm having trouble connecting to my neural net right now. Please try again later." }]);
-      uiSounds.error();
+      if (typeof uiSounds.error === 'function') uiSounds.error();
     } finally {
       setIsTyping(false);
     }
@@ -122,6 +127,7 @@ export default function LiveChatWidget() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about our services..."
+                aria-label="Chat message"
                 className="flex-1 bg-surface rounded-full px-4 py-2 text-[13px] outline-none border transition-colors shadow-inner"
                 style={{ background: 'var(--color-surface)', color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}
               />

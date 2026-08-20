@@ -85,28 +85,10 @@ const STATS = [
 export default function Footer() {
   const footerRef = useRef(null);
   const isInView = useInView(footerRef, { once: true, margin: "-10px" });
-  const [uptime, setUptime] = useState(99);
-  const [isPingSuccess, setIsPingSuccess] = useState(true);
-
-  useEffect(() => {
-    // Real-Time Uptime Check Simulation (pings own origin)
-    const checkUptime = async () => {
-      try {
-        const start = performance.now();
-        await fetch(window.location.href, { method: 'HEAD', cache: 'no-cache' });
-        const latency = performance.now() - start;
-        setIsPingSuccess(true);
-        // Simulate minor fluctuation
-        setUptime(prev => prev >= 99.9 ? 99.9 : prev + 0.1);
-      } catch (e) {
-        setIsPingSuccess(false);
-        setUptime(98);
-      }
-    };
-    const interval = setInterval(checkUptime, 30000);
-    checkUptime();
-    return () => clearInterval(interval);
-  }, []);
+  
+  // Set fixed uptime for the animation
+  const uptime = 99.9;
+  const isPingSuccess = true;
 
   const dynamicStats = STATS.map(s => s.label === 'Uptime' ? { ...s, value: uptime, color: isPingSuccess ? '#0e8d6d' : '#ef4444' } : s);
 
@@ -160,9 +142,9 @@ export default function Footer() {
 
           {/* Footer Links + Copyright */}
           <div className="flex flex-wrap items-center justify-center lg:justify-end gap-3 md:gap-4 mt-4 md:mt-0">
-            {/* Phone Number */}
-            <a href="tel:+919876543210" className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-colors hover:bg-black/5">
-              <span className="text-[12px] font-bold" style={{ color: 'var(--color-text-secondary)' }}>+91 98765 43210</span>
+            {/* Email Link */}
+            <a href="mailto:info@baavatech.com" className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-colors hover:bg-black/5">
+              <span className="text-[12px] font-bold" style={{ color: 'var(--color-text-secondary)' }}>info@baavatech.com</span>
             </a>
 
             <span className="text-[12px]" style={{ color: 'var(--color-border)' }}>|</span>
@@ -182,11 +164,11 @@ export default function Footer() {
 
             {/* Legal links */}
             <div className="flex items-center gap-3">
-              <a href="#" onClick={(e) => e.preventDefault()} className="text-[12px] font-medium tracking-wide transition-colors hover:text-primary-600" style={{ color: 'var(--color-text-tertiary)' }}>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert("Privacy Policy will be available soon."); }} className="text-[12px] font-medium tracking-wide transition-colors hover:text-primary-600" style={{ color: 'var(--color-text-tertiary)' }}>
                 Privacy Policy
               </a>
               <span className="text-[12px]" style={{ color: 'var(--color-border)' }}>·</span>
-              <a href="#" onClick={(e) => e.preventDefault()} className="text-[12px] font-medium tracking-wide transition-colors hover:text-primary-600" style={{ color: 'var(--color-text-tertiary)' }}>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert("Terms of Service will be available soon."); }} className="text-[12px] font-medium tracking-wide transition-colors hover:text-primary-600" style={{ color: 'var(--color-text-tertiary)' }}>
                 Terms of Service
               </a>
             </div>

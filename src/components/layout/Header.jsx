@@ -41,8 +41,11 @@ export default function Header({ setIsContactOpen }) {
           <div className="relative overflow-hidden rounded-lg flex-shrink-0">
             {/* Standard Logo */}
             <img 
-              src="/logo-transparent.png" 
+              src="/logo-transparent.webp" 
               alt="Baava Tech Logo" 
+              width="250"
+              height="56"
+              fetchPriority="high"
               className="h-10 md:h-12 lg:h-14 w-auto object-contain" 
             />
             <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden rounded-lg">

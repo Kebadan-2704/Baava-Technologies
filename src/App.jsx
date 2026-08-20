@@ -7,9 +7,7 @@ import BackgroundEffects from './components/visuals/BackgroundEffects';
 import CustomCursor from './components/visuals/CustomCursor';
 import CookieConsent from './components/ui/CookieConsent';
 import Preloader from './components/ui/Preloader';
-import LiveIntelligence from './components/sections/LiveIntelligence';
 import LiveChatWidget from './components/ui/LiveChatWidget';
-import LiveActivityTicker from './components/ui/LiveActivityTicker';
 import ContactModal from './components/ui/ContactModal';
 import PortfolioModal from './components/ui/PortfolioModal';
 
@@ -18,10 +16,27 @@ function App() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isPortfolioOpen, setIsPortfolioOpen] = useState(false);
   const [appReady, setAppReady] = useState(false);
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   useEffect(() => {
     document.documentElement.classList.remove('theme-steel', 'dark');
+    
+    const handleLocationChange = () => setCurrentPath(window.location.pathname);
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
   }, []);
+
+  if (currentPath !== '/') {
+    return (
+      <div className="min-h-screen w-full flex flex-col items-center justify-center p-6 bg-surface text-center">
+        <h1 className="text-6xl font-bold mb-4 gradient-text">404</h1>
+        <p className="text-xl mb-8 text-text-secondary">Page not found.</p>
+        <a href="/" className="px-6 py-3 rounded-full font-semibold text-white shadow-md transition-all hover:shadow-lg" style={{ background: 'var(--color-primary-500)' }}>
+          Return Home
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-[100dvh] lg:h-[100dvh] w-full overflow-x-hidden lg:overflow-hidden flex flex-col font-sans transition-colors duration-700 bg-mesh" style={{ background: 'var(--color-surface)', color: 'var(--color-text-primary)' }}>

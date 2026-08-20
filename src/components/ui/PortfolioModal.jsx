@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, BarChart3, Database, ShieldCheck, Clock, Users, Layers, Workflow } from 'lucide-react';
 import { uiSounds } from '../../utils/sounds';
@@ -50,30 +50,71 @@ const CASE_STUDIES = [
 
 export default function PortfolioModal({ isOpen, onClose }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const modalRef = React.useRef(null);
+
+  // Focus Trapping
+  useEffect(() => {
+    const handleTab = (e) => {
+      if (!isOpen || !modalRef.current || e.key !== 'Tab') return;
+      
+      const focusableElements = modalRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      
+      if (focusableElements.length === 0) return;
+      
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          lastElement.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          firstElement.focus();
+          e.preventDefault();
+        }
+      }
+    };
+    
+    if (isOpen) {
+      setTimeout(() => {
+        const focusableElements = modalRef.current?.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusableElements && focusableElements.length > 0) {
+          focusableElements[0].focus();
+        }
+      }, 100);
+    }
+    
+    window.addEventListener('keydown', handleTab);
+    return () => window.removeEventListener('keydown', handleTab);
+  }, [isOpen]);
+
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % CASE_STUDIES.length);
+    if (typeof uiSounds.hover === 'function') uiSounds.hover();
+  }, []);
+  
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + CASE_STUDIES.length) % CASE_STUDIES.length);
+    if (typeof uiSounds.hover === 'function') uiSounds.hover();
+  }, []);
 
   // Close on Escape, arrow keys for navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) {
         onClose();
-        uiSounds.clickClose();
+        if (typeof uiSounds.clickClose === 'function') uiSounds.clickClose();
       }
       if (e.key === 'ArrowRight' && isOpen) nextSlide();
       if (e.key === 'ArrowLeft' && isOpen) prevSlide();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen]);
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % CASE_STUDIES.length);
-    uiSounds.hover();
-  };
-  
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + CASE_STUDIES.length) % CASE_STUDIES.length);
-    uiSounds.hover();
-  };
+  }, [isOpen, onClose, nextSlide, prevSlide]);
 
   const activeCase = CASE_STUDIES[currentIndex];
 
@@ -93,6 +134,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
 
           {/* Modal Container */}
           <motion.div
+            ref={modalRef}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -239,11 +281,15 @@ export default function PortfolioModal({ isOpen, onClose }) {
                   {CASE_STUDIES.map((_, idx) => (
                     <button 
                       key={idx} 
-                      onClick={() => { setCurrentIndex(idx); uiSounds.hover(); }}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === currentIndex ? 'scale-125' : 'opacity-40'}`}
-                      style={{ background: idx === currentIndex ? activeCase.color : 'var(--color-text-tertiary)' }}
+                      onClick={() => { setCurrentIndex(idx); if (typeof uiSounds.hover === 'function') uiSounds.hover(); }}
+                      className="p-2 transition-all duration-300 group"
                       aria-label={`Go to case study ${idx + 1}`}
-                    />
+                    >
+                      <div 
+                        className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${idx === currentIndex ? 'scale-125' : 'opacity-40 group-hover:opacity-70'}`}
+                        style={{ background: idx === currentIndex ? activeCase.color : 'var(--color-text-tertiary)' }}
+                      />
+                    </button>
                   ))}
                 </div>
                 <button 

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
+  const isHoveringRef = useRef(isHovering);
   const [hoverRect, setHoverRect] = useState(null);
 
   const cursorX = useMotionValue(-100);
@@ -13,11 +14,16 @@ export default function CustomCursor() {
   const smoothY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
+    isHoveringRef.current = isHovering;
+    document.body.style.cursor = isHovering ? 'none' : 'auto';
+  }, [isHovering]);
+
+  useEffect(() => {
     // Check if it's a touch device, we don't want cursor on mobile
     if (window.matchMedia('(pointer: coarse)').matches) return;
 
     const handleMouseMove = (e) => {
-      if (!isHovering) {
+      if (!isHoveringRef.current) {
         cursorX.set(e.clientX);
         cursorY.set(e.clientY);
       }
@@ -43,15 +49,12 @@ export default function CustomCursor() {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseover', handleMouseOver);
 
-    // Hide native cursor when hovering magnetic elements
-    document.body.style.cursor = isHovering ? 'none' : 'auto';
-
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
       document.body.style.cursor = 'auto';
     };
-  }, [isHovering, cursorX, cursorY]);
+  }, [cursorX, cursorY]);
 
   // If we are hovering a magnetic element, the cursor expands to encompass it
   const size = isHovering && hoverRect 

@@ -22,6 +22,7 @@ export default function CookieConsent() {
     localStorage.setItem('baava_cookie_consent', 'accepted');
     setIsVisible(false);
     uiSounds.clickClose();
+    window.location.reload();
   };
 
   return (
@@ -55,7 +56,11 @@ export default function CookieConsent() {
                 </p>
               </div>
               <button 
-                onClick={() => setIsVisible(false)}
+                onClick={() => {
+                  localStorage.setItem('baava_cookie_consent', 'declined');
+                  setIsVisible(false);
+                  uiSounds.clickClose();
+                }}
                 className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors"
                 aria-label="Close cookie consent"
               >

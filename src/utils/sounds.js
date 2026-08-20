@@ -90,6 +90,16 @@ class SoundSystem {
     osc.start();
     osc.stop(this.ctx.currentTime + 0.15);
   }
+
+  success() {
+    this.playTone(600, 'sine', 0.1, 0.05);
+    setTimeout(() => this.playTone(800, 'sine', 0.15, 0.05), 100);
+  }
+
+  error() {
+    this.playTone(200, 'sawtooth', 0.15, 0.05);
+    setTimeout(() => this.playTone(150, 'sawtooth', 0.2, 0.05), 150);
+  }
 }
 
 export const uiSounds = new SoundSystem();
